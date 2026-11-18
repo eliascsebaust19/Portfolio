@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg-void: #050811;
+    --bg-obsidian: #080d1a;
+    --bg-surface: #0d1426;
+    --accent-cyan: #00e5ff;
+    --accent-teal: #14b8a6;
+    --accent-violet: #7c3aed;
+  }
+
+  html {
+    background-color: var(--bg-void);
+    color: #f1f5f9;
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--bg-void);
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  /* Accessible keyboard focus indicators */
+  :focus-visible {
+    outline: 2px solid #00e5ff;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* Custom subtle dark scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050811;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Custom desktop cursor active state */
+@media (pointer: fine) and (min-width: 1024px) {
+  body.has-custom-cursor,
+  body.has-custom-cursor a,
+  body.has-custom-cursor button {
+    cursor: none;
+  }
+}
+
+/* Subtle section divider glow */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 229, 255, 0.22) 30%,
+    rgba(124, 58, 237, 0.22) 70%,
+    transparent 100%
+  );
+}
+
+/* Skip to content accessibility link */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.65rem 1.15rem;
+  background: #00e5ff;
+  color: #050811;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
