@@ -5,7 +5,9 @@ import { CustomCursor } from "@/components/CustomCursor/CustomCursor";
 import { Hero } from "@/components/Hero/Hero";
 import { Loader } from "@/components/Loader/Loader";
 import { Navbar } from "@/components/Navbar/Navbar";
+import { SeasonalParticlesOverlay } from "@/components/SeasonalTheme/SeasonalParticlesOverlay";
 import { AudioVibeProvider } from "@/context/AudioVibeContext";
+import { SeasonalThemeProvider } from "@/context/SeasonalThemeContext";
 
 const About = lazy(() =>
   import("@/components/About/About").then((m) => ({ default: m.About }))
@@ -53,12 +55,14 @@ export function App() {
   const handleLoaderComplete = useCallback(() => setLoaderDone(true), []);
 
   return (
-    <AudioVibeProvider>
-      <div className="relative min-h-screen bg-void text-slate-100">
-        {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
-        <CustomCursor />
-        <VibeParticles />
-        <Navbar />
+    <SeasonalThemeProvider>
+      <AudioVibeProvider>
+        <div className="relative min-h-screen bg-void text-slate-100">
+          {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
+          <CustomCursor />
+          <SeasonalParticlesOverlay />
+          <VibeParticles />
+          <Navbar />
 
         <main id="main-content">
           <Hero ready={loaderDone} />
@@ -81,6 +85,7 @@ export function App() {
         <AudioPlayerWidget />
       </div>
     </AudioVibeProvider>
+  </SeasonalThemeProvider>
   );
 }
 

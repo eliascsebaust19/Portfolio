@@ -3,6 +3,7 @@ import { Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { scrollToSection } from "@/animations/gsapConfig";
+import { SeasonalThemeSelector } from "@/components/SeasonalTheme/SeasonalThemeSelector";
 
 const NAV_ITEMS = [
   { id: "home", label: "Home" },
@@ -105,8 +106,10 @@ export function Navbar() {
           })}
         </ul>
 
-        {/* Right CTA + Mobile Menu Button */}
-        <div className="flex items-center gap-3">
+        {/* Right CTA + Seasonal Selector + Mobile Menu Button */}
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <SeasonalThemeSelector compact={false} />
+
           <a
             href="#contact"
             onClick={(e) => handleNavClick(e, "contact")}

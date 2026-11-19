@@ -11,11 +11,37 @@
     --accent-cyan: #00e5ff;
     --accent-teal: #14b8a6;
     --accent-violet: #7c3aed;
+    --accent-seasonal: #38bdf8;
+    --glow-seasonal: rgba(56, 189, 248, 0.28);
     --vibe-bass: 0;
     --vibe-mid: 0;
     --vibe-treble: 0;
     --vibe-energy: 0;
     --vibe-beat: 0;
+  }
+
+  [data-season="winter"] {
+    --accent-cyan: #38bdf8;
+    --accent-teal: #0284c7;
+    --accent-violet: #818cf8;
+  }
+
+  [data-season="spring"] {
+    --accent-cyan: #f472b6;
+    --accent-teal: #34d399;
+    --accent-violet: #c084fc;
+  }
+
+  [data-season="autumn"] {
+    --accent-cyan: #fb923c;
+    --accent-teal: #f59e0b;
+    --accent-violet: #ea580c;
+  }
+
+  [data-season="cyber"] {
+    --accent-cyan: #00e5ff;
+    --accent-teal: #14b8a6;
+    --accent-violet: #7c3aed;
   }
 
   html {
