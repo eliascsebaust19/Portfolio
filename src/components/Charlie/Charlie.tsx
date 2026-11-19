@@ -18,6 +18,8 @@ interface Reply {
 const QUICK_REPLIES = [
   "Who is Elias?",
   "Projects",
+  "Certificates",
+  "Hackathon",
   "Skills",
   "Download CV",
   "Contact",
@@ -56,6 +58,20 @@ function getReply(input: string): Reply {
   if (q.includes("skill") || q.includes("tech") || q.includes("stack") || q.includes("language")) {
     return {
       text: "Main stack: Flutter & Dart (mobile), React/Next.js (web), Node.js & PHP (backend), MySQL & PostgreSQL (databases).",
+    };
+  }
+
+  if (q.includes("cert") || q.includes("bohubrihi") || q.includes("credential")) {
+    return {
+      text: "Elias holds a verified Certificate of Completion in 'Pathway to Software Engineering' from Bohubrihi (ID: 6aefe4db60143534454f7a38) and an AI Hackathon Certificate from DIU & Upay.",
+      link: { label: "View Bohubrihi Certificate", href: "/certificates/bohubrihi-pathway-to-software-engineering.pdf" },
+    };
+  }
+
+  if (q.includes("hackathon") || q.includes("diu") || q.includes("fest") || q.includes("upay") || q.includes("loading_211")) {
+    return {
+      text: "At the national AI Hackathon (AI Dev Fest 2026, DIU & Upay), Elias led Team Loading_211 to build Upay RiskIntel — an AI trust & fraud intelligence system. Both the certificate and live event photos are featured on the site!",
+      link: { label: "View Hackathon Certificate", href: "/certificates/diu-ai-hackathon-2026-certificate.pdf" },
     };
   }
 

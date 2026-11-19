@@ -30,6 +30,11 @@ const Education = lazy(() =>
     default: m.Education,
   }))
 );
+const Credentials = lazy(() =>
+  import("@/components/Credentials/Credentials").then((m) => ({
+    default: m.Credentials,
+  }))
+);
 const GitHubSection = lazy(() =>
   import("@/components/GitHub/GitHub").then((m) => ({
     default: m.GitHubSection,
@@ -86,6 +91,7 @@ export function App() {
               <Technologies />
               <Projects />
               <Education />
+              <Credentials />
               <GitHubSection />
               <Contact />
             </Suspense>
