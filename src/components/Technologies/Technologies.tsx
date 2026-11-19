@@ -13,6 +13,7 @@ import {
 import { VscVscode } from "react-icons/vsc";
 import { TbApi } from "react-icons/tb";
 import { gsap, useGSAP } from "@/animations/gsapConfig";
+import { useAudioVibe } from "@/context/useAudioVibe";
 import {
   TECH_CATEGORIES,
   TECH_STAGES,
@@ -47,6 +48,7 @@ const STAGE_BADGE_CLASSES: Record<TechStage, string> = {
 export function Technologies() {
   const sectionRef = useRef<HTMLElement>(null);
   const { canRender3D, reducedMotion } = useDeviceCapabilities();
+  const { vibeRef } = useAudioVibe();
   const [selectedCategory, setSelectedCategory] = useState<
     "All" | TechCategory
   >("All");
@@ -223,6 +225,7 @@ export function Technologies() {
                     selectedId={activeTech?.id || null}
                     onSelect={setSelectedTechId}
                     active={isInView}
+                    vibeRef={vibeRef}
                   />
                 </Suspense>
               ) : (

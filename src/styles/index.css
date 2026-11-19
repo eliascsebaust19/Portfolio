@@ -11,6 +11,11 @@
     --accent-cyan: #00e5ff;
     --accent-teal: #14b8a6;
     --accent-violet: #7c3aed;
+    --vibe-bass: 0;
+    --vibe-mid: 0;
+    --vibe-treble: 0;
+    --vibe-energy: 0;
+    --vibe-beat: 0;
   }
 
   html {
@@ -97,6 +102,72 @@
 
 .skip-link:focus {
   top: 1rem;
+}
+
+/* Audio-reactive Vibe Mode (driven by Web Audio AnalyserNode CSS vars) */
+html.vibe-active .vibe-monogram {
+  transform: scale(calc(1 + var(--vibe-beat) * 0.14));
+  box-shadow: 0 0 calc(12px + var(--vibe-bass) * 28px) rgba(0, 229, 255, 0.35);
+}
+
+html.vibe-active .hero-reveal h1,
+html.vibe-active h1.hero-reveal {
+  text-shadow: 0 0 calc(12px + var(--vibe-bass) * 32px) rgba(0, 229, 255, 0.28);
+}
+
+html.vibe-active .whatido-card,
+html.vibe-active .project-card,
+html.vibe-active .milestone-card,
+html.vibe-active .gh-reveal,
+html.vibe-active .about-animate.rounded-2xl {
+  will-change: transform, box-shadow;
+  box-shadow: 0 10px calc(18px + var(--vibe-energy) * 26px) rgba(0, 229, 255, calc(0.06 + var(--vibe-beat) * 0.14));
+  border-color: rgba(0, 229, 255, calc(0.18 + var(--vibe-beat) * 0.36));
+}
+
+html.vibe-active .whatido-card:nth-child(odd),
+html.vibe-active .project-card:nth-child(odd),
+html.vibe-active .gh-reveal:nth-child(odd),
+html.vibe-active .about-animate.rounded-2xl:nth-child(odd) {
+  transform: translate3d(
+      calc(var(--vibe-mid) * -10px),
+      calc(var(--vibe-bass) * -12px - var(--vibe-beat) * 6px),
+      0
+    )
+    rotate(calc(var(--vibe-beat) * -0.9deg));
+}
+
+html.vibe-active .whatido-card:nth-child(even),
+html.vibe-active .project-card:nth-child(even),
+html.vibe-active .gh-reveal:nth-child(even),
+html.vibe-active .about-animate.rounded-2xl:nth-child(even) {
+  transform: translate3d(
+      calc(var(--vibe-mid) * 10px),
+      calc(var(--vibe-treble) * -10px - var(--vibe-beat) * 8px),
+      0
+    )
+    rotate(calc(var(--vibe-beat) * 0.9deg));
+}
+
+html.vibe-active .milestone-card:nth-child(odd) {
+  transform: translate3d(
+    calc(var(--vibe-mid) * 8px),
+    calc(var(--vibe-bass) * -8px),
+    0
+  );
+}
+
+html.vibe-active .milestone-card:nth-child(even) {
+  transform: translate3d(
+    calc(var(--vibe-mid) * -8px),
+    calc(var(--vibe-treble) * -8px),
+    0
+  );
+}
+
+html.vibe-active .section-divider {
+  opacity: calc(0.55 + var(--vibe-energy) * 0.45);
+  box-shadow: 0 0 calc(8px + var(--vibe-beat) * 18px) rgba(0, 229, 255, 0.3);
 }
 
 @media (prefers-reduced-motion: reduce) {

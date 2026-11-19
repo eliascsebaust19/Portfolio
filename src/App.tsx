@@ -1,8 +1,11 @@
 import { Suspense, lazy, useCallback, useState } from "react";
+import { AudioPlayerWidget } from "@/components/AudioVibe/AudioPlayerWidget";
+import { VibeParticles } from "@/components/AudioVibe/VibeParticles";
 import { CustomCursor } from "@/components/CustomCursor/CustomCursor";
 import { Hero } from "@/components/Hero/Hero";
 import { Loader } from "@/components/Loader/Loader";
 import { Navbar } from "@/components/Navbar/Navbar";
+import { AudioVibeProvider } from "@/context/AudioVibeContext";
 
 const About = lazy(() =>
   import("@/components/About/About").then((m) => ({ default: m.About }))
@@ -50,29 +53,34 @@ export function App() {
   const handleLoaderComplete = useCallback(() => setLoaderDone(true), []);
 
   return (
-    <div className="relative min-h-screen bg-void text-slate-100">
-      {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
-      <CustomCursor />
-      <Navbar />
+    <AudioVibeProvider>
+      <div className="relative min-h-screen bg-void text-slate-100">
+        {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
+        <CustomCursor />
+        <VibeParticles />
+        <Navbar />
 
-      <main id="main-content">
-        <Hero ready={loaderDone} />
+        <main id="main-content">
+          <Hero ready={loaderDone} />
 
-        <Suspense fallback={<SectionFallback />}>
-          <About />
-          <WhatIDo />
-          <Technologies />
-          <Projects />
-          <Education />
-          <GitHubSection />
-          <Contact />
+          <Suspense fallback={<SectionFallback />}>
+            <About />
+            <WhatIDo />
+            <Technologies />
+            <Projects />
+            <Education />
+            <GitHubSection />
+            <Contact />
+          </Suspense>
+        </main>
+
+        <Suspense fallback={null}>
+          <Footer />
         </Suspense>
-      </main>
 
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
-    </div>
+        <AudioPlayerWidget />
+      </div>
+    </AudioVibeProvider>
   );
 }
 

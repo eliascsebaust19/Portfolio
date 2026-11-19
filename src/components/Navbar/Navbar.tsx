@@ -67,7 +67,7 @@ export function Navbar() {
           className="group flex items-center gap-3 focus-visible:outline-none"
           aria-label="Elias Ahmad — Back to top"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan/30 bg-surface/80 font-display text-sm font-bold tracking-wider text-cyan transition-transform duration-300 group-hover:scale-105 group-hover:border-cyan/60">
+          <span className="vibe-monogram flex h-10 w-10 items-center justify-center rounded-xl border border-cyan/30 bg-surface/80 font-display text-sm font-bold tracking-wider text-cyan transition-transform duration-300 group-hover:scale-105 group-hover:border-cyan/60">
             {profile.monogram}
           </span>
           <span className="hidden font-display text-sm font-semibold tracking-[0.16em] text-slate-100 sm:inline-block">

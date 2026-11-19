@@ -2,15 +2,18 @@ import { useEffect, useMemo, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
+import type { VibeMetrics } from "@/context/AudioVibeContext";
 import type { TechnologyItem } from "@/data/technologies";
 
 interface TechNodeProps {
   tech: TechnologyItem;
+  index: number;
   position: [number, number, number];
   isHighlighted: boolean;
   isSelected: boolean;
   onSelect: (id: string) => void;
   active: boolean;
+  vibeRef: React.MutableRefObject<VibeMetrics>;
 }
 
 function createTechTexture(label: string, accent: string): THREE.CanvasTexture {
@@ -50,11 +53,13 @@ function createTechTexture(label: string, accent: string): THREE.CanvasTexture {
 
 function TechNode({
   tech,
+  index,
   position,
   isHighlighted,
   isSelected,
   onSelect,
   active,
+  vibeRef,
 }: TechNodeProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const texture = useMemo(
@@ -68,14 +73,37 @@ function TechNode({
     };
   }, [texture]);
 
-  useFrame((_state, delta) => {
+  useFrame((state, delta) => {
     if (!meshRef.current || !active) return;
 
-    const targetScale = isSelected ? 1.24 : isHighlighted ? 1.0 : 0.72;
-    const s = THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.1);
+    const vibe = vibeRef.current;
+    const vibeScale = vibe.isPlaying
+      ? vibe.bass * 0.22 + vibe.beat * 0.16
+      : 0;
+    const baseScale = isSelected ? 1.24 : isHighlighted ? 1.0 : 0.72;
+    const s = THREE.MathUtils.lerp(
+      meshRef.current.scale.x,
+      baseScale + vibeScale,
+      0.14
+    );
     meshRef.current.scale.setScalar(s);
 
-    meshRef.current.rotation.y += delta * (isSelected ? 0.65 : 0.25);
+    // Scatter & jump outward gently along node direction on bass beats
+    const jumpFactor = vibe.isPlaying
+      ? Math.abs(Math.sin(state.clock.getElapsedTime() * 5 + index)) *
+          vibe.bass *
+          0.32 +
+        vibe.beat * 0.18
+      : 0;
+    const scatterMul = vibe.isPlaying ? 1 + vibe.energy * 0.24 : 1;
+    meshRef.current.position.set(
+      position[0] * scatterMul,
+      position[1] * scatterMul + jumpFactor,
+      position[2] * scatterMul
+    );
+
+    meshRef.current.rotation.y +=
+      delta * (isSelected ? 0.65 : 0.25) * (vibe.isPlaying ? 1 + vibe.energy * 1.8 : 1);
   });
 
   return (
@@ -83,10 +111,10 @@ function TechNode({
       speed={active ? 1.4 : 0}
       rotationIntensity={0.25}
       floatIntensity={0.45}
-      position={position}
     >
       <mesh
         ref={meshRef}
+        position={position}
         onClick={(e) => {
           e.stopPropagation();
           onSelect(tech.id);
@@ -119,12 +147,14 @@ function TechSceneRig({
   selectedId,
   onSelect,
   active,
+  vibeRef,
 }: {
   items: TechnologyItem[];
   highlightedIds: Set<string>;
   selectedId: string | null;
   onSelect: (id: string) => void;
   active: boolean;
+  vibeRef: React.MutableRefObject<VibeMetrics>;
 }) {
   const groupRef = useRef<THREE.Group>(null);
 
@@ -145,9 +175,12 @@ function TechSceneRig({
   useFrame((state) => {
     if (!groupRef.current || !active) return;
     const { pointer } = state;
+    const vibe = vibeRef.current;
+    const speedBoost = vibe.isPlaying ? 0.22 * vibe.energy : 0;
+
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
-      pointer.x * 0.45 + state.clock.getElapsedTime() * 0.08,
+      pointer.x * 0.45 + state.clock.getElapsedTime() * (0.08 + speedBoost),
       0.04
     );
     groupRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -162,12 +195,14 @@ function TechSceneRig({
       {items.map((tech, idx) => (
         <TechNode
           key={tech.id}
+          index={idx}
           tech={tech}
           position={positions[idx]}
           isHighlighted={highlightedIds.has(tech.id)}
           isSelected={selectedId === tech.id}
           onSelect={onSelect}
           active={active}
+          vibeRef={vibeRef}
         />
       ))}
     </group>
@@ -180,6 +215,7 @@ interface TechOrbitCanvasProps {
   selectedId: string | null;
   onSelect: (id: string) => void;
   active: boolean;
+  vibeRef: React.MutableRefObject<VibeMetrics>;
 }
 
 export default function TechOrbitCanvas({
@@ -188,6 +224,7 @@ export default function TechOrbitCanvas({
   selectedId,
   onSelect,
   active,
+  vibeRef,
 }: TechOrbitCanvasProps) {
   return (
     <Canvas
@@ -206,6 +243,7 @@ export default function TechOrbitCanvas({
         selectedId={selectedId}
         onSelect={onSelect}
         active={active}
+        vibeRef={vibeRef}
       />
     </Canvas>
   );

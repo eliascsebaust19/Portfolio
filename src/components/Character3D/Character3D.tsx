@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { profile } from "@/data/profile";
+import { useAudioVibe } from "@/context/useAudioVibe";
 import { useDeviceCapabilities } from "@/hooks/useReducedMotion";
 
 const AvatarCanvas = lazy(() => import("./AvatarCanvas"));
@@ -64,6 +65,7 @@ function StaticAvatarFallback({ status }: { status: ModelStatus }) {
 
 export function Character3D() {
   const { canRender3D, reducedMotion } = useDeviceCapabilities();
+  const { vibeRef } = useAudioVibe();
   const avatarModels = profile.avatar.models || [];
   const [selectedAvatarId, setSelectedAvatarId] = useState<string>(
     avatarModels[0]?.id || "avatar-01"
@@ -188,6 +190,7 @@ export function Character3D() {
                 glbPath={currentAvatar.glbPath}
                 hasGlbModel={modelStatus === "ready"}
                 pointerRef={pointerRef}
+                vibeRef={vibeRef}
                 reducedMotion={reducedMotion}
               />
 

@@ -2,10 +2,12 @@ import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import { useAnimations, useGLTF } from "@react-three/drei";
+import type { VibeMetrics } from "@/context/AudioVibeContext";
 
 interface AvatarModelProps {
   glbPath: string;
   pointerRef: React.MutableRefObject<{ x: number; y: number }>;
+  vibeRef: React.MutableRefObject<VibeMetrics>;
   reducedMotion: boolean;
 }
 
@@ -45,6 +47,7 @@ function findBone(root: THREE.Object3D, candidates: string[]): THREE.Object3D | 
 export function AvatarModel({
   glbPath,
   pointerRef,
+  vibeRef,
   reducedMotion,
 }: AvatarModelProps) {
   const groupRef = useRef<THREE.Group>(null);
@@ -139,34 +142,51 @@ export function AvatarModel({
     const px = smoothPointer.current.x;
     const py = smoothPointer.current.y;
     const elapsed = state.clock.getElapsedTime();
+    const vibe = vibeRef.current;
 
-    // Subtle idle breathing / hover float
+    // Audio-reactive bounce & groove when Vibe Mode is active
+    const beatJump = vibe.isPlaying
+      ? Math.pow(vibe.bass, 1.2) * 0.13 + vibe.beat * 0.06
+      : 0;
+    const grooveSway = vibe.isPlaying
+      ? Math.sin(elapsed * 5.8) * (0.03 + vibe.mid * 0.05)
+      : 0;
+    const headBob = vibe.isPlaying
+      ? Math.sin(elapsed * 11.6) * (0.04 + vibe.bass * 0.14)
+      : 0;
+
+    // Subtle idle breathing / hover float + beat jump
     const idleFloat = Math.sin(elapsed * 1.4) * 0.02;
-    groupRef.current.position.y = offset.y + idleFloat;
+    groupRef.current.position.y = offset.y + idleFloat + beatJump;
 
-    // Gentle body yaw tracking pointer
+    // Gentle body yaw tracking pointer + musical groove sway
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
-      px * 0.24,
-      0.06
+      px * 0.24 + grooveSway * 1.4,
+      0.08
     );
     groupRef.current.rotation.x = THREE.MathUtils.lerp(
       groupRef.current.rotation.x,
       -py * 0.06,
       0.06
     );
+    groupRef.current.rotation.z = THREE.MathUtils.lerp(
+      groupRef.current.rotation.z,
+      grooveSway,
+      0.1
+    );
 
-    // Smoothly blend pointer look toward cursor without accumulating rotation
+    // Smoothly blend pointer look + beat head-nod without accumulating rotation
     if (headBone) {
       headBone.rotation.y = THREE.MathUtils.lerp(
         headBone.rotation.y,
-        px * 0.35,
+        px * 0.35 + grooveSway * 0.8,
         0.12
       );
       headBone.rotation.x = THREE.MathUtils.lerp(
         headBone.rotation.x,
-        THREE.MathUtils.clamp(-py * 0.22, -0.26, 0.26),
-        0.12
+        THREE.MathUtils.clamp(-py * 0.22 + headBob, -0.32, 0.32),
+        0.14
       );
     }
     if (neckBone) {
