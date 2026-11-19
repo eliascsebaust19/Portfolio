@@ -4,7 +4,7 @@ export interface WhatIDoItem {
   subtitle: string;
   description: string;
   focusAreas: string[];
-  icon: "globe" | "server" | "code" | "database" | "cpu";
+  icon: "globe" | "server" | "code" | "database" | "cpu" | "smartphone";
 }
 
 export interface AvatarOption {
@@ -24,6 +24,7 @@ export const profile = {
   greeting: "Hello, I'm",
   introSubtitle: "CSE Student | Developer | Technology Enthusiast",
   dynamicRoles: [
+    "Flutter Mobile App Developer",
     "Software Developer",
     "Web Developer",
     "Backend Developer",
@@ -65,20 +66,29 @@ export const profile = {
     ] as AvatarOption[],
   },
   about: {
-    headline: "Building practical software with strong engineering fundamentals.",
+    headline: "Building practical software & mobile experiences with strong engineering fundamentals.",
     paragraphs: [
       "I'm Elias Ahmad, a Computer Science and Engineering (CSE) student at Bangladesh Army University of Science and Technology (BAUST), aspiring Software Engineer, and technology enthusiast.",
-      "My core focus is on web development, backend engineering, and database-driven software solutions, alongside a strong interest in Flutter Mobile App Development and DevOps.",
-      "I enjoy breaking down real-world problems, learning modern tools step by step, and transforming creative ideas into reliable, maintainable digital applications.",
+      "My core focus spans cross-platform mobile application development with Flutter, robust full-stack web and backend engineering, and database-driven software architectures.",
+      "I enjoy breaking down real-world problems, writing clean reactive code, and transforming creative ideas into high-performance, maintainable mobile and web applications.",
     ],
     highlights: [
       { label: "Institution", value: "BAUST" },
       { label: "Department", value: "Computer Science & Engineering" },
-      { label: "Core Focus", value: "Web, Backend & Software Engineering" },
-      { label: "Exploring Next", value: "Flutter Mobile & DevOps" },
+      { label: "Mobile Focus", value: "Flutter & Dart (Android & iOS)" },
+      { label: "Web & Backend", value: "React, Node.js, PHP & Relational DBs" },
     ],
   },
   whatIDo: [
+    {
+      id: "mobile-development",
+      title: "Flutter Mobile App Development",
+      subtitle: "Cross-Platform Android & iOS",
+      description:
+        "Building beautiful, high-performance native-compiled mobile apps from a single codebase with Flutter and Dart, featuring fluid reactive state management and responsive UI.",
+      focusAreas: ["Flutter", "Dart", "State Management", "Cross-Platform UI"],
+      icon: "smartphone",
+    },
     {
       id: "web-development",
       title: "Web Development",

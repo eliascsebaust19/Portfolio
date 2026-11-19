@@ -1,6 +1,8 @@
 import { Suspense, lazy, useEffect, useMemo, useRef, useState } from "react";
 import {
   SiCss,
+  SiDart,
+  SiFlutter,
   SiGit,
   SiGithub,
   SiHtml5,
@@ -26,6 +28,8 @@ import { useDeviceCapabilities } from "@/hooks/useReducedMotion";
 const TechOrbitCanvas = lazy(() => import("./TechOrbitCanvas"));
 
 const TECH_ICONS: Record<string, typeof SiHtml5> = {
+  flutter: SiFlutter,
+  dart: SiDart,
   html: SiHtml5,
   css: SiCss,
   javascript: SiJavascript,
@@ -54,7 +58,7 @@ export function Technologies() {
   >("All");
   const [selectedStage, setSelectedStage] = useState<"All" | TechStage>("All");
   const [selectedTechId, setSelectedTechId] = useState<string | null>(
-    "javascript"
+    "flutter"
   );
   const [isInView, setIsInView] = useState(false);
 

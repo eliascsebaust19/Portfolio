@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Code2, Cpu, Database, Globe, Server } from "lucide-react";
+import { Code2, Cpu, Database, Globe, Server, Smartphone } from "lucide-react";
 import { gsap, useGSAP } from "@/animations/gsapConfig";
 import { profile, type WhatIDoItem } from "@/data/profile";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -10,6 +10,7 @@ const ICON_MAP: Record<WhatIDoItem["icon"], typeof Globe> = {
   code: Code2,
   database: Database,
   cpu: Cpu,
+  smartphone: Smartphone,
 };
 
 export function WhatIDo() {

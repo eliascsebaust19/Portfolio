@@ -1,4 +1,5 @@
 export type TechCategory =
+  | "Mobile"
   | "Frontend"
   | "Backend"
   | "Database"
@@ -19,6 +20,7 @@ export interface TechnologyItem {
 
 export const TECH_CATEGORIES: ("All" | TechCategory)[] = [
   "All",
+  "Mobile",
   "Frontend",
   "Backend",
   "Database",
@@ -34,6 +36,26 @@ export const TECH_STAGES: ("All" | TechStage)[] = [
 ];
 
 export const technologies: TechnologyItem[] = [
+  {
+    id: "flutter",
+    name: "Flutter",
+    shortLabel: "Flutter",
+    category: "Mobile",
+    stage: "Practicing",
+    accent: "#02569B",
+    summary:
+      "Cross-platform mobile UI toolkit compiling natively to Android and iOS with expressive widgets and reactive architecture.",
+  },
+  {
+    id: "dart",
+    name: "Dart",
+    shortLabel: "Dart",
+    category: "Mobile",
+    stage: "Practicing",
+    accent: "#0175C2",
+    summary:
+      "Client-optimized, object-oriented programming language powering reactive Flutter mobile apps, streams, and async operations.",
+  },
   {
     id: "html",
     name: "HTML",
