@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import { Volume2, VolumeX, FastForward } from "lucide-react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { computeTimeline, FPS, TOTAL_FRAMES, SCENES } from "./timeline";
 import { SmokeLayer } from "./SmokeLayer";
 import { Particles } from "./Particles";
@@ -25,25 +24,34 @@ export function LuxuryIntro({
 }: LuxuryIntroProps) {
   const reducedMotion = useReducedMotion();
   const [frame, setFrame] = useState(0);
-  const [isMuted, setIsMuted] = useState(false);
-  const [needsAudioInteraction, setNeedsAudioInteraction] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
   const [scale, setScale] = useState(1);
+  const [contentScaleMultiplier, setContentScaleMultiplier] = useState(1);
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const rafRef = useRef<number>(0);
   const startTimeRef = useRef<number>(0);
   const isExitingRef = useRef(false);
 
-  // Resize listener to fit 1920x1080 viewport seamlessly
+  // Responsive full-bleed cover scaling (edge-to-edge fullscreen on all viewports)
   useEffect(() => {
     const updateScale = () => {
-      const s = Math.min(
-        window.innerWidth / STAGE_W,
-        window.innerHeight / STAGE_H
-      );
-      setScale(Math.max(0.25, s));
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Cover scaling: ensures zero black bars, fills 100% of the screen
+      const cover = Math.max(vw / STAGE_W, vh / STAGE_H);
+      setScale(cover);
+
+      // Protect content on narrow portrait screens (mobile)
+      if (vw < 768) {
+        const safeRatio = Math.min(1, (vw * 0.88) / (440 * cover));
+        setContentScaleMultiplier(safeRatio);
+      } else {
+        setContentScaleMultiplier(1);
+      }
     };
+
     updateScale();
     window.addEventListener("resize", updateScale, { passive: true });
     return () => window.removeEventListener("resize", updateScale);
@@ -62,7 +70,7 @@ export function LuxuryIntro({
         vol = Math.max(0, vol - 0.1);
         a.volume = vol;
         if (vol > 0.05) {
-          setTimeout(fadeStep, 40);
+          setTimeout(fadeStep, 35);
         } else {
           a.pause();
         }
@@ -75,7 +83,7 @@ export function LuxuryIntro({
     }, 600);
   }, [onComplete]);
 
-  // Audio initialization with autoplay policy handling
+  // Audio setup: Always unmuted, full volume, autoplays immediately
   useEffect(() => {
     if (reducedMotion) {
       onComplete();
@@ -85,14 +93,25 @@ export function LuxuryIntro({
     const audio = new Audio(audioSrc);
     audio.preload = "auto";
     audio.loop = false;
-    audio.volume = 0.85;
+    audio.volume = 0.9;
+    audio.muted = false;
     audioRef.current = audio;
 
     const playPromise = audio.play();
     if (playPromise !== undefined) {
       playPromise.catch(() => {
-        // Autoplay blocked by browser policy until user interacts
-        setNeedsAudioInteraction(true);
+        // If browser blocks autoplay until interaction, start audio on first touch/click anywhere
+        const enableOnGesture = () => {
+          if (audioRef.current) {
+            audioRef.current.play().catch(() => {});
+          }
+          window.removeEventListener("pointerdown", enableOnGesture);
+          window.removeEventListener("keydown", enableOnGesture);
+          window.removeEventListener("touchstart", enableOnGesture);
+        };
+        window.addEventListener("pointerdown", enableOnGesture, { once: true });
+        window.addEventListener("keydown", enableOnGesture, { once: true });
+        window.addEventListener("touchstart", enableOnGesture, { once: true });
       });
     }
 
@@ -103,49 +122,18 @@ export function LuxuryIntro({
     };
   }, [audioSrc, onComplete, reducedMotion]);
 
-  // Enable audio on any click/touch if browser blocked autoplay
-  const handleUserInteract = () => {
-    if (needsAudioInteraction && audioRef.current) {
-      audioRef.current.play().then(() => {
-        setNeedsAudioInteraction(false);
-      }).catch(() => {});
-    }
-  };
-
-  const toggleSound = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!audioRef.current) return;
-    if (isMuted) {
-      audioRef.current.muted = false;
-      audioRef.current.play().catch(() => {});
-      setIsMuted(false);
-      setNeedsAudioInteraction(false);
-    } else {
-      audioRef.current.muted = true;
-      setIsMuted(true);
-    }
-  };
-
-  const handleSkip = useCallback(
-    (e?: React.MouseEvent) => {
-      if (e) e.stopPropagation();
-      finishIntro();
-    },
-    [finishIntro]
-  );
-
-  // Keyboard shortcut: Escape or Space to skip
+  // Keyboard shortcut: Escape to skip if needed
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" || e.code === "Space") {
-        handleSkip();
+      if (e.key === "Escape") {
+        finishIntro();
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [handleSkip]);
+  }, [finishIntro]);
 
-  // Animation timeline loop
+  // Animation timeline loop (0 to 360 frames = 12s)
   useEffect(() => {
     if (reducedMotion) return;
 
@@ -174,18 +162,16 @@ export function LuxuryIntro({
   if (reducedMotion) return null;
 
   const tl = computeTimeline(frame);
-  const progressPct = Math.min(100, (frame / TOTAL_FRAMES) * 100);
 
   return (
     <div
       role="dialog"
       aria-label="Cinematic Intro — Elias Ahmad"
-      onClick={handleUserInteract}
       className={`fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#030303] select-none transition-opacity duration-700 ease-out ${
         isExiting ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
-      {/* 1920x1080 scaled luxury stage */}
+      {/* 1920x1080 true full-bleed cover stage (edge-to-edge, zero black bars) */}
       <div
         style={{
           width: STAGE_W,
@@ -197,7 +183,7 @@ export function LuxuryIntro({
           backgroundColor: "#030303",
         }}
       >
-        {/* Continuous WebGL volumetric smoke & dust */}
+        {/* Continuous WebGL volumetric smoke & floating particles */}
         <SmokeLayer
           u={{
             t: tl.t,
@@ -223,7 +209,8 @@ export function LuxuryIntro({
           style={{
             position: "absolute",
             inset: 0,
-            transform: `scale(${tl.exitScale})`,
+            transform: `scale(${tl.exitScale * contentScaleMultiplier})`,
+            transformOrigin: "center 48%",
           }}
         >
           {frame >= SCENES.formation.from && (
@@ -277,7 +264,7 @@ export function LuxuryIntro({
 
         <Vignette />
 
-        {/* Scene 6 transition veil */}
+        {/* Scene 6 transition veil into the portfolio */}
         {frame >= SCENES.transition.from && (
           <div
             style={{
@@ -290,56 +277,6 @@ export function LuxuryIntro({
           />
         )}
       </div>
-
-      {/* Floating HUD Controls */}
-      <header className="pointer-events-auto absolute inset-x-0 top-0 z-30 flex items-center justify-between p-4 sm:p-6">
-        {/* Sound Toggle */}
-        <button
-          type="button"
-          onClick={toggleSound}
-          aria-label={isMuted ? "Unmute intro sound" : "Mute intro sound"}
-          className="flex cursor-pointer items-center gap-2 rounded-full border border-slate-700/60 bg-black/60 px-3.5 py-1.5 font-mono text-xs text-slate-300 shadow-lg backdrop-blur-md transition-all hover:border-cyan/50 hover:bg-black/80 hover:text-cyan"
-        >
-          {isMuted ? <VolumeX size={15} /> : <Volume2 size={15} />}
-          <span>{isMuted ? "Sound Off" : "Sound On"}</span>
-        </button>
-
-        {/* Center prompt if browser blocked autoplay */}
-        {needsAudioInteraction && (
-          <div className="hidden animate-pulse rounded-full border border-cyan/40 bg-cyan/10 px-4 py-1.5 font-mono text-xs text-cyan backdrop-blur-md sm:flex items-center gap-2">
-            <Volume2 size={13} />
-            <span>Click anywhere to enable sound</span>
-          </div>
-        )}
-
-        {/* Skip button with animated border/progress */}
-        <button
-          type="button"
-          onClick={handleSkip}
-          aria-label="Skip cinematic intro"
-          className="group flex cursor-pointer items-center gap-2 rounded-full border border-slate-700/60 bg-black/60 px-4 py-1.5 font-mono text-xs text-slate-300 shadow-lg backdrop-blur-md transition-all hover:border-cyan/60 hover:bg-black/80 hover:text-cyan"
-        >
-          <span>Skip Intro</span>
-          <FastForward size={14} className="transition-transform group-hover:translate-x-0.5" />
-        </button>
-      </header>
-
-      {/* Mobile tap prompt if autoplay was blocked */}
-      {needsAudioInteraction && (
-        <div className="pointer-events-none absolute bottom-8 z-30 sm:hidden">
-          <div className="animate-pulse rounded-full border border-cyan/40 bg-black/80 px-4 py-1.5 font-mono text-[11px] text-cyan backdrop-blur-md">
-            Tap screen for sound 🔊
-          </div>
-        </div>
-      )}
-
-      {/* Subtle bottom timeline progress indicator */}
-      <footer className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-1 bg-white/5">
-        <div
-          className="h-full bg-gradient-to-r from-cyan via-teal to-violet transition-[width] duration-100 ease-linear"
-          style={{ width: `${progressPct}%` }}
-        />
-      </footer>
     </div>
   );
 }
