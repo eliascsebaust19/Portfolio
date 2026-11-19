@@ -64,9 +64,24 @@ function StaticAvatarFallback({ status }: { status: ModelStatus }) {
 
 export function Character3D() {
   const { canRender3D, reducedMotion } = useDeviceCapabilities();
+  const avatarModels = profile.avatar.models || [];
+  const [selectedAvatarId, setSelectedAvatarId] = useState<string>(
+    avatarModels[0]?.id || "avatar-01"
+  );
   const [modelStatus, setModelStatus] = useState<ModelStatus>("checking");
   const containerRef = useRef<HTMLDivElement>(null);
   const pointerRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+
+  const currentAvatar =
+    avatarModels.find((m) => m.id === selectedAvatarId) ||
+    avatarModels[0] || {
+      id: "avatar-01",
+      label: "Avatar 01",
+      title: "Executive Idle",
+      subtitle: "Natural Lifelike Standing & Breathing",
+      badge: "Idle",
+      glbPath: profile.avatar.glbPath,
+    };
 
   // Verify the GLB binary file actually exists before invoking GLTFLoader
   // (Prevents Vite SPA fallback HTML from triggering Three.js parse errors)
@@ -75,7 +90,7 @@ export function Character3D() {
 
     async function verifyGlbAsset() {
       try {
-        const res = await fetch(profile.avatar.glbPath, {
+        const res = await fetch(currentAvatar.glbPath, {
           method: "GET",
           headers: { Range: "bytes=0-3" },
         });
@@ -110,7 +125,7 @@ export function Character3D() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [currentAvatar.glbPath]);
 
   // Track pointer across window cleanly without blocking text or mobile touch
   useEffect(() => {
@@ -148,11 +163,64 @@ export function Character3D() {
           <Suspense fallback={staticFallback}>
             <div className="relative h-full w-full">
               <AvatarCanvas
-                glbPath={profile.avatar.glbPath}
+                glbPath={currentAvatar.glbPath}
                 hasGlbModel={modelStatus === "ready"}
                 pointerRef={pointerRef}
                 reducedMotion={reducedMotion}
               />
+
+              {/* Sleek Model Switcher Pill */}
+              {modelStatus === "ready" && avatarModels.length > 1 && (
+                <div
+                  className="pointer-events-auto absolute bottom-2 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1.5 sm:bottom-4 select-none"
+                  role="region"
+                  aria-label="3D Avatar Model Controls"
+                >
+                  <div
+                    role="tablist"
+                    aria-label="Select 3D Avatar Variant"
+                    className="flex items-center gap-1 rounded-full border border-slate-700/70 bg-obsidian/85 p-1 shadow-[0_8px_30px_rgba(0,0,0,0.6),0_0_16px_rgba(0,229,255,0.08)] backdrop-blur-md"
+                  >
+                    {avatarModels.map((m) => {
+                      const isSelected = m.id === selectedAvatarId;
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          role="tab"
+                          aria-selected={isSelected}
+                          aria-label={`Switch to ${m.label} - ${m.title}`}
+                          onClick={() => setSelectedAvatarId(m.id)}
+                          className={`group relative flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[11px] transition-all duration-300 sm:px-3.5 sm:py-1.5 sm:text-xs cursor-pointer ${
+                            isSelected
+                              ? "border border-cyan/50 bg-cyan/15 text-cyan shadow-[0_0_12px_rgba(0,229,255,0.25)] font-semibold"
+                              : "border border-transparent text-slate-400 hover:border-slate-700 hover:bg-slate-800/60 hover:text-slate-200"
+                          }`}
+                        >
+                          <span
+                            className={`h-1.5 w-1.5 rounded-full transition-all duration-300 ${
+                              isSelected
+                                ? "bg-cyan shadow-[0_0_6px_#00e5ff] scale-110"
+                                : "bg-slate-600 group-hover:bg-slate-400"
+                            }`}
+                          />
+                          <span>{m.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Active Variant Subtitle */}
+                  <div className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-slate-400 transition-opacity duration-300">
+                    <span className="font-medium text-cyan">{currentAvatar.title}</span>
+                    <span className="text-slate-600">·</span>
+                    <span className="hidden sm:inline text-slate-400">{currentAvatar.subtitle}</span>
+                    {currentAvatar.badge && (
+                      <span className="sm:hidden text-slate-400">{currentAvatar.badge}</span>
+                    )}
+                  </div>
+                </div>
+              )}
 
               {/* When GLB is not yet supplied, layer the honest static fallback card in front of the 3D calibration rings */}
               {modelStatus !== "ready" && (

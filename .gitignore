@@ -26,3 +26,8 @@ dist-ssr
 *.sln
 *.sw?
 *.tsbuildinfo
+.vercel
+
+# Raw model exports
+3D model/
+3D Model/

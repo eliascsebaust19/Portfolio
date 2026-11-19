@@ -97,11 +97,14 @@ export function AvatarModel({
   useEffect(() => {
     if (reducedMotion || names.length === 0) return;
     const preferred =
-      names.find((n) => /idle|breath|stand/i.test(n)) || names[0];
+      names.find((n) => /idle|breath|stand|anim|gesture|clean|action/i.test(n)) ||
+      names[0];
     const action = actions[preferred];
-    action?.reset().fadeIn(0.4).play();
+    if (action) {
+      action.reset().fadeIn(0.35).play();
+    }
     return () => {
-      action?.fadeOut(0.3);
+      action?.fadeOut(0.25);
     };
   }, [actions, names, reducedMotion]);
 

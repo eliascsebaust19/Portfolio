@@ -7,6 +7,15 @@ export interface WhatIDoItem {
   icon: "globe" | "server" | "code" | "database" | "cpu";
 }
 
+export interface AvatarOption {
+  id: string;
+  label: string;
+  title: string;
+  subtitle: string;
+  badge?: string;
+  glbPath: string;
+}
+
 export const profile = {
   monogram: "EA",
   name: "ELIAS AHMAD",
@@ -25,9 +34,35 @@ export const profile = {
   department: "Computer Science and Engineering (CSE)",
   location: "Bangladesh",
   avatar: {
-    glbPath: "/models/elias-avatar.glb",
+    glbPath: "/models/avatar-01.glb",
     fallbackImage: "/images/profile/avatar-fallback.svg",
     alt: "Elias Ahmad 3D developer avatar stage",
+    models: [
+      {
+        id: "avatar-01",
+        label: "Avatar 01",
+        title: "Executive Idle",
+        subtitle: "Natural Lifelike Standing & Breathing",
+        badge: "Idle",
+        glbPath: "/models/avatar-01.glb",
+      },
+      {
+        id: "avatar-02",
+        label: "Avatar 02",
+        title: "Developer Greeting",
+        subtitle: "Friendly Gesture & Welcoming Pose",
+        badge: "Greeting",
+        glbPath: "/models/avatar-02.glb",
+      },
+      {
+        id: "avatar-03",
+        label: "Avatar 03",
+        title: "Dynamic Action",
+        subtitle: "Expressive Performance & Energy",
+        badge: "Action",
+        glbPath: "/models/avatar-03.glb",
+      },
+    ] as AvatarOption[],
   },
   about: {
     headline: "Building practical software with strong engineering fundamentals.",

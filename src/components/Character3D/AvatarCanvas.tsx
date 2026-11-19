@@ -1,9 +1,19 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ContactShadows, Environment } from "@react-three/drei";
+import { ContactShadows, Environment, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { AvatarModel } from "./AvatarModel";
 import { PlaceholderStage } from "./PlaceholderStage";
+import { profile } from "@/data/profile";
+
+// Preload all 3D GLB avatar assets eagerly for seamless instant switching
+if (typeof window !== "undefined" && profile.avatar?.models) {
+  profile.avatar.models.forEach((model) => {
+    if (model.glbPath) {
+      useGLTF.preload(model.glbPath, true);
+    }
+  });
+}
 
 interface AvatarCanvasProps {
   glbPath: string;
@@ -64,6 +74,7 @@ export default function AvatarCanvas({
       >
         {hasGlbModel ? (
           <AvatarModel
+            key={glbPath}
             glbPath={glbPath}
             pointerRef={pointerRef}
             reducedMotion={reducedMotion}
