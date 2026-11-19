@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { ArrowUpRight, Eye, ExternalLink } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaAndroid } from "react-icons/fa";
 import { gsap, useGSAP } from "@/animations/gsapConfig";
 import { projects, type ProjectItem } from "@/data/projects";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -57,7 +57,7 @@ export function Projects() {
             </h2>
           </div>
           <div className="max-w-md rounded-xl border border-slate-800/80 bg-obsidian/80 px-4 py-3 text-xs text-slate-400">
-            Currently displaying <strong className="text-slate-200">2 initial demo placeholders</strong>. Final verified projects and live URLs can be swapped directly in{" "}
+            Currently displaying <strong className="text-slate-200">1 remaining demo placeholder</strong>. Final verified projects and live URLs can be swapped directly in{" "}
             <code className="font-mono text-cyan">src/data/projects.ts</code>.
           </div>
         </div>
@@ -128,6 +128,18 @@ export function Projects() {
                   </button>
 
                   <div className="flex items-center gap-2">
+                    {project.apkUrl && (
+                      <a
+                        href={project.apkUrl}
+                        download="AdoptMatch.apk"
+                        aria-label={`Download ${project.title} Android APK`}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-teal-500/40 bg-teal-500/10 px-3 py-2 font-mono text-xs text-teal-300 transition-colors hover:border-teal-400 hover:bg-teal-500/20"
+                      >
+                        <FaAndroid size={14} className="text-teal-400" />
+                        <span>APK</span>
+                      </a>
+                    )}
+
                     {project.githubUrl ? (
                       <a
                         href={project.githubUrl}

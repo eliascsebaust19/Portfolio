@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { ExternalLink, Layers, X } from "lucide-react";
-import { FaGithub } from "react-icons/fa";
+import { FaGithub, FaAndroid } from "react-icons/fa";
 import type { ProjectItem } from "@/data/projects";
 
 interface ProjectModalProps {
@@ -77,6 +77,17 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </p>
 
             <div className="mt-5 flex flex-wrap gap-3">
+              {project.apkUrl && (
+                <a
+                  href={project.apkUrl}
+                  download="AdoptMatch.apk"
+                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 px-4 py-2.5 text-sm font-semibold text-void transition-opacity hover:opacity-90 shadow-[0_0_20px_rgba(20,184,166,0.3)]"
+                >
+                  <FaAndroid size={16} />
+                  <span>Download Android APK (65 MB)</span>
+                </a>
+              )}
+
               {project.githubUrl ? (
                 <a
                   href={project.githubUrl}
@@ -104,12 +115,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   <span>Live Website</span>
                   <ExternalLink size={15} />
                 </a>
-              ) : (
+              ) : !project.apkUrl ? (
                 <span className="inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-void px-4 py-2.5 font-mono text-xs text-slate-400">
                   <ExternalLink size={14} />
                   <span>Live Demo URL pending final project</span>
                 </span>
-              )}
+              ) : null}
             </div>
           </div>
 
@@ -118,23 +129,58 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <h4 className="font-mono text-xs uppercase tracking-wider text-slate-400">
               Preview Screenshots
             </h4>
-            <div className="space-y-4">
-              {project.screenshots.map((shot, idx) => (
-                <figure
-                  key={idx}
-                  className="overflow-hidden rounded-2xl border border-slate-800 bg-void"
-                >
+            {project.screenshots.length > 2 && project.screenshots[0].src.includes("banner") ? (
+              <div className="space-y-4">
+                {/* Hero banner */}
+                <figure className="overflow-hidden rounded-2xl border border-slate-800 bg-void">
                   <img
-                    src={shot.src}
-                    alt={shot.caption}
+                    src={project.screenshots[0].src}
+                    alt={project.screenshots[0].caption}
                     className="h-auto w-full object-cover"
                   />
                   <figcaption className="border-t border-slate-800/80 px-4 py-2.5 font-mono text-xs text-slate-400">
-                    {shot.caption}
+                    {project.screenshots[0].caption}
                   </figcaption>
                 </figure>
-              ))}
-            </div>
+
+                {/* Mobile screens in 3-column responsive grid */}
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                  {project.screenshots.slice(1).map((shot, idx) => (
+                    <figure
+                      key={idx}
+                      className="flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-void"
+                    >
+                      <img
+                        src={shot.src}
+                        alt={shot.caption}
+                        className="h-auto w-full object-cover"
+                      />
+                      <figcaption className="border-t border-slate-800/80 p-2.5 font-mono text-[11px] text-slate-400">
+                        {shot.caption}
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {project.screenshots.map((shot, idx) => (
+                  <figure
+                    key={idx}
+                    className="overflow-hidden rounded-2xl border border-slate-800 bg-void"
+                  >
+                    <img
+                      src={shot.src}
+                      alt={shot.caption}
+                      className="h-auto w-full object-cover"
+                    />
+                    <figcaption className="border-t border-slate-800/80 px-4 py-2.5 font-mono text-xs text-slate-400">
+                      {shot.caption}
+                    </figcaption>
+                  </figure>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Problem Statement */}

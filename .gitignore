@@ -31,3 +31,6 @@ dist-ssr
 # Raw model exports
 3D model/
 3D Model/
+
+# Local raw assets staging
+Assets/

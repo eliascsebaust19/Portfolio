@@ -10,6 +10,7 @@ export interface ProjectItem {
   technologies: string[];
   githubUrl: string | null;
   liveUrl: string | null;
+  apkUrl?: string | null;
   overview: string;
   problemStatement: string;
   features: string[];
@@ -66,33 +67,56 @@ export const projects: ProjectItem[] = [
     ],
   },
   {
-    id: "demo-study-planner",
+    id: "adoptmatch",
     indexLabel: "02",
-    title: "Academic Task & Study Planner",
-    category: "Full-Stack Web Application",
-    isDemo: true,
+    title: "AdoptMatch — Pet Adoption & Rescue App",
+    category: "Flutter Cross-Platform Mobile Application (Android & iOS)",
+    isDemo: false,
     shortDescription:
-      "Structured course tracker, deadline planner, and responsive dark dashboard interface.",
-    thumbnail: "/images/projects/demo-study-planner.svg",
+      "A modern Flutter & Dart mobile application for pet adoption, smart matchmaking with Tinder-style swipe cards, lifestyle compatibility quiz, and direct shelter communication.",
+    thumbnail: "/images/projects/adoptmatch/adoptmatch-banner.png",
     thumbnailAlt:
-      "Demo preview of the Academic Task and Study Planner dashboard interface",
-    technologies: ["HTML", "CSS", "JavaScript", "PHP", "MySQL"],
-    githubUrl: null,
+      "AdoptMatch Flutter mobile app showcase presenting Home dashboard, Swipe & Match, and Explore feed",
+    technologies: [
+      "Flutter",
+      "Dart",
+      "Firebase",
+      "REST API",
+      "Provider",
+      "Material Design 3",
+      "Android SDK",
+    ],
+    githubUrl: "https://github.com/eliascsebaust19/AdoptMatch",
     liveUrl: null,
+    apkUrl: "/apk/AdoptMatch.apk",
     overview:
-      "Academic Task & Study Planner is designed to demonstrate structured task management and course organization for university students.",
+      "AdoptMatch is a production-grade cross-platform mobile application developed with Flutter and Dart to revolutionize pet rescue and adoption. Designed with an engaging, user-first UI, it connects compassionate adopters with rescued animals through intuitive Tinder-style swipe gestures, compatibility quizzes, verified shelter profiles, and real-time adoption request tracking.",
     problemStatement:
-      "Students managing multiple university courses, lab assignments, and project milestones often scatter deadlines across separate notes, making weekly prioritization harder.",
+      "Traditional pet adoption processes in shelters are fragmented across scattered social media posts, leading to delayed responses, low adoption completion rates, and mismatched pet-owner lifestyles.",
     features: [
-      "Course-wise task grouping with priority status indicators",
-      "Relational MySQL schema concept for courses, milestones, and notes",
-      "Responsive layout tailored for desktop and mobile study sessions",
-      "Configurable repository and live deployment links in centralized data",
+      "Tinder-style 'Swipe & Match' card interface with gesture-driven likes, passes, and quick pet information inspection",
+      "5-step Lifestyle & Compatibility Quiz calculating percentage match based on living space, activity level, and family setup",
+      "Interactive Home Dashboard with categorized pet browsing (Dogs, Cats, Birds, Rabbits) and distance-based filtering",
+      "Integrated AI Pet Advisor floating assistant to recommend suitable breeds, care tips, and training guidance",
+      "Digital Pet Passport tracking vaccination statuses, microchip numbers, spay/neuter history, and urgency tags",
+      "Real-time adoption request lifecycle management and in-app direct shelter communication",
     ],
     screenshots: [
       {
-        src: "/images/projects/demo-study-planner.svg",
-        caption: "Demo Dashboard & Task Organization Layout",
+        src: "/images/projects/adoptmatch/adoptmatch-banner.png",
+        caption: "AdoptMatch Mobile Suite — Home Feed, Gesture Swipe Match, and Explore Views",
+      },
+      {
+        src: "/images/projects/adoptmatch/adoptmatch-home.jpeg",
+        caption: "AdoptMatch Home Dashboard — Category Filters, Adoption Stats & Recommendations",
+      },
+      {
+        src: "/images/projects/adoptmatch/adoptmatch-swipe.jpeg",
+        caption: "Interactive Swipe & Match Interface — Rescue Profile with Health & Compatibility Badges",
+      },
+      {
+        src: "/images/projects/adoptmatch/adoptmatch-feed.jpeg",
+        caption: "Personalized Explore Feed & AI Pet Advisor Interface",
       },
     ],
   },
