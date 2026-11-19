@@ -1,5 +1,5 @@
-import { Suspense, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useEffect, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   ContactShadows,
   Environment,
@@ -19,6 +19,59 @@ if (typeof window !== "undefined" && profile.avatar?.models) {
       useGLTF.preload(model.glbPath, false);
     }
   });
+}
+
+function CameraRig({
+  hasGlbModel,
+  viewMode,
+  reducedMotion,
+}: {
+  hasGlbModel: boolean;
+  viewMode: "close" | "full";
+  reducedMotion: boolean;
+}) {
+  const { camera } = useThree();
+  const lookTarget = useRef(new THREE.Vector3(0, 0.68, 0));
+
+  useEffect(() => {
+    const targetPos = !hasGlbModel
+      ? new THREE.Vector3(0, 0.2, 4.4)
+      : viewMode === "close"
+        ? new THREE.Vector3(0, 0.74, 2.45)
+        : new THREE.Vector3(0, 0.25, 4.55);
+    const targetLook = !hasGlbModel
+      ? new THREE.Vector3(0, 0, 0)
+      : viewMode === "close"
+        ? new THREE.Vector3(0, 0.68, 0)
+        : new THREE.Vector3(0, 0.18, 0);
+
+    if (reducedMotion) {
+      camera.position.copy(targetPos);
+      lookTarget.current.copy(targetLook);
+      camera.lookAt(lookTarget.current);
+    }
+  }, [camera, hasGlbModel, viewMode, reducedMotion]);
+
+  useFrame(() => {
+    const targetPos = !hasGlbModel
+      ? new THREE.Vector3(0, 0.2, 4.4)
+      : viewMode === "close"
+        ? new THREE.Vector3(0, 0.74, 2.45)
+        : new THREE.Vector3(0, 0.25, 4.55);
+    const targetLook = !hasGlbModel
+      ? new THREE.Vector3(0, 0, 0)
+      : viewMode === "close"
+        ? new THREE.Vector3(0, 0.68, 0)
+        : new THREE.Vector3(0, 0.18, 0);
+
+    if (!reducedMotion) {
+      camera.position.lerp(targetPos, 0.08);
+      lookTarget.current.lerp(targetLook, 0.08);
+    }
+    camera.lookAt(lookTarget.current);
+  });
+
+  return null;
 }
 
 function VibeStageLights({
@@ -58,7 +111,7 @@ function VibeStageLights({
     <>
       <spotLight
         ref={cyanSpotRef}
-        position={[-3.5, 3, -2]}
+        position={[-3.2, 3.2, -1.8]}
         angle={0.55}
         penumbra={1}
         intensity={4.5}
@@ -66,7 +119,7 @@ function VibeStageLights({
       />
       <pointLight
         ref={violetPointRef}
-        position={[2.8, -1.2, -2]}
+        position={[2.6, 0.4, -1.8]}
         intensity={2.4}
         color="#7c3aed"
       />
@@ -77,6 +130,7 @@ function VibeStageLights({
 interface AvatarCanvasProps {
   glbPath: string;
   hasGlbModel: boolean;
+  viewMode: "close" | "full";
   pointerRef: React.MutableRefObject<{ x: number; y: number }>;
   vibeRef: React.MutableRefObject<VibeMetrics>;
   reducedMotion: boolean;
@@ -85,6 +139,7 @@ interface AvatarCanvasProps {
 export default function AvatarCanvas({
   glbPath,
   hasGlbModel,
+  viewMode,
   pointerRef,
   vibeRef,
   reducedMotion,
@@ -93,7 +148,7 @@ export default function AvatarCanvas({
     <Canvas
       shadows
       dpr={[1, 2]}
-      camera={{ position: [0, 0.25, 4.6], fov: 36, near: 0.1, far: 100 }}
+      camera={{ position: [0, 0.74, 2.45], fov: 33, near: 0.1, far: 100 }}
       gl={{
         alpha: true,
         antialias: true,
@@ -103,17 +158,24 @@ export default function AvatarCanvas({
       }}
       className="h-full w-full"
     >
+      <CameraRig
+        hasGlbModel={hasGlbModel}
+        viewMode={viewMode}
+        reducedMotion={reducedMotion}
+      />
+
       {/* Cinematic 3-point lighting + audio-reactive rim lights */}
-      <ambientLight intensity={0.65} color="#cbd5e1" />
+      <ambientLight intensity={0.72} color="#cbd5e1" />
       <directionalLight
-        position={[3, 4, 4]}
-        intensity={1.7}
-        color="#f1f5f9"
+        position={[2.5, 3.8, 4]}
+        intensity={1.75}
+        color="#f8fafc"
         castShadow
         shadow-mapSize={[1024, 1024]}
       />
       <VibeStageLights vibeRef={vibeRef} reducedMotion={reducedMotion} />
-      <directionalLight position={[0, 1.5, 4]} intensity={0.85} color="#e2e8f0" />
+      {/* Soft front key fill for crisp facial details */}
+      <directionalLight position={[0, 1.4, 3.5]} intensity={1.0} color="#e2e8f0" />
 
       {/* Local procedural IBL reflections (no external HDR network request) */}
       <Environment resolution={256} frames={1} environmentIntensity={0.55}>

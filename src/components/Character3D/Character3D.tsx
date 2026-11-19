@@ -7,6 +7,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { Maximize2, Minimize2 } from "lucide-react";
 import { profile } from "@/data/profile";
 import { useAudioVibe } from "@/context/useAudioVibe";
 import { useDeviceCapabilities } from "@/hooks/useReducedMotion";
@@ -70,6 +71,7 @@ export function Character3D() {
   const [selectedAvatarId, setSelectedAvatarId] = useState<string>(
     avatarModels[0]?.id || "avatar-01"
   );
+  const [viewMode, setViewMode] = useState<"close" | "full">("close");
   const [modelStatus, setModelStatus] = useState<ModelStatus>("checking");
   const containerRef = useRef<HTMLDivElement>(null);
   const pointerRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -189,6 +191,7 @@ export function Character3D() {
               <AvatarCanvas
                 glbPath={currentAvatar.glbPath}
                 hasGlbModel={modelStatus === "ready"}
+                viewMode={viewMode}
                 pointerRef={pointerRef}
                 vibeRef={vibeRef}
                 reducedMotion={reducedMotion}
@@ -233,6 +236,30 @@ export function Character3D() {
                         </button>
                       );
                     })}
+
+                    <span className="mx-0.5 h-4 w-px bg-slate-700/80" aria-hidden="true" />
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setViewMode((prev) => (prev === "close" ? "full" : "close"))
+                      }
+                      aria-label={
+                        viewMode === "close"
+                          ? "Switch to full body view"
+                          : "Switch to close portrait view"
+                      }
+                      title={viewMode === "close" ? "Full Body View" : "Close View"}
+                      className="flex cursor-pointer items-center gap-1 rounded-full px-2.5 py-1 font-mono text-[11px] text-slate-300 transition-colors hover:bg-slate-800/70 hover:text-cyan sm:py-1.5"
+                    >
+                      {viewMode === "close" ? (
+                        <Maximize2 size={12} />
+                      ) : (
+                        <Minimize2 size={12} />
+                      )}
+                      <span className="hidden sm:inline">
+                        {viewMode === "close" ? "Full" : "Close"}
+                      </span>
+                    </button>
                   </div>
 
                   {/* Active Variant Subtitle */}
