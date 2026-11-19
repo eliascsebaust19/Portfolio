@@ -69,18 +69,18 @@ export function GitHubSection() {
     <section
       id="github"
       ref={sectionRef}
-      className="relative bg-void py-24 sm:py-28"
+      className="relative bg-void py-16 sm:py-20"
     >
       <div className="section-divider absolute inset-x-0 top-0" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
         {/* Header */}
-        <div className="gh-reveal mb-12 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+        <div className="gh-reveal mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-cyan">
               06 // Open Source &amp; Code
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-slate-50 sm:text-4xl">
+            <h2 className="mt-2 font-display text-2xl font-bold text-slate-50 sm:text-3xl">
               GitHub Activity
             </h2>
           </div>

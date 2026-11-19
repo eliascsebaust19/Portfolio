@@ -28,7 +28,7 @@ export const projects: ProjectItem[] = [
     category: "Full-Stack Campus Marketplace & P2P Platform",
     isDemo: false,
     shortDescription:
-      "A dedicated peer-to-peer campus marketplace for BAUST university students featuring verified student trading, barter requests, wanted board, and OCR ID card authentication.",
+      "Peer-to-peer campus marketplace for BAUST students — verified trading, barter, wanted board, and OCR ID verification.",
     thumbnail: "/images/projects/baust-exchange.png",
     thumbnailAlt:
       "BAUST Exchange peer-to-peer campus marketplace interface preview",
@@ -44,16 +44,16 @@ export const projects: ProjectItem[] = [
     githubUrl: "https://github.com/eliascsebaust19/BaustExchange1",
     liveUrl: "https://baust-exchange.vercel.app/",
     overview:
-      "BAUST Exchange is an authenticated, student-centric marketplace platform built to solve the clutter and fraud risks of unorganized social media buy-and-sell groups. Exclusively designed for Bangladesh Army University of Science and Technology (BAUST), it facilitates verified peer-to-peer trading of academic textbooks, drawing tools, electronics, and dorm essentials.",
+      "Authenticated marketplace for BAUST students to trade textbooks, electronics, and dorm essentials safely — with barter workflow, wanted board, and OCR-based ID verification.",
     problemStatement:
-      "Students seeking semester materials frequently face unvetted Facebook group posts, lack of category-wise search, scam risks, and messy negotiation channels without campus accountability.",
+      "Unvetted social-media buy/sell groups mean scams, messy negotiation, and no campus accountability.",
     features: [
-      "Multi-type listings for Selling, Exchanging, or Free Donation giveaways",
-      "Structured barter workflow with formal trade offers and dual confirmation",
-      "Campus ISO (Wanted Board) with automatic keyword matchmaking alerts",
-      "Direct 1-to-1 in-app messaging linked to listing contexts for safe on-campus handoffs",
-      "Automated Student ID verification via server-side OCR (Tesseract.js + Sharp)",
-      "Role-based access control (Student, Teacher, Admin) with Google OAuth 2.0",
+      "Sell, exchange, or donate listings",
+      "Barter workflow with dual confirmation",
+      "Wanted board with keyword match alerts",
+      "1-to-1 in-app messaging",
+      "OCR student ID verification (Tesseract.js)",
+      "Role-based access + Google OAuth",
     ],
     screenshots: [
       {
@@ -73,7 +73,7 @@ export const projects: ProjectItem[] = [
     category: "Flutter Cross-Platform Mobile Application (Android & iOS)",
     isDemo: false,
     shortDescription:
-      "A modern Flutter & Dart mobile application for pet adoption, smart matchmaking with Tinder-style swipe cards, lifestyle compatibility quiz, and direct shelter communication.",
+      "Flutter pet adoption app with swipe-and-match, compatibility quiz, and shelter messaging.",
     thumbnail: "/images/projects/adoptmatch/adoptmatch-banner.png",
     thumbnailAlt:
       "AdoptMatch Flutter mobile app showcase presenting Home dashboard, Swipe & Match, and Explore feed",
@@ -90,16 +90,16 @@ export const projects: ProjectItem[] = [
     liveUrl: null,
     apkUrl: "/apk/AdoptMatch.apk",
     overview:
-      "AdoptMatch is a production-grade cross-platform mobile application developed with Flutter and Dart to revolutionize pet rescue and adoption. Designed with an engaging, user-first UI, it connects compassionate adopters with rescued animals through intuitive Tinder-style swipe gestures, compatibility quizzes, verified shelter profiles, and real-time adoption request tracking.",
+      "Cross-platform Flutter app connecting adopters with rescued pets via swipe gestures, a compatibility quiz, verified shelters, and real-time request tracking.",
     problemStatement:
-      "Traditional pet adoption processes in shelters are fragmented across scattered social media posts, leading to delayed responses, low adoption completion rates, and mismatched pet-owner lifestyles.",
+      "Scattered social-media posts slow adoption and cause mismatched pet-owner lifestyles.",
     features: [
-      "Tinder-style 'Swipe & Match' card interface with gesture-driven likes, passes, and quick pet information inspection",
-      "5-step Lifestyle & Compatibility Quiz calculating percentage match based on living space, activity level, and family setup",
-      "Interactive Home Dashboard with categorized pet browsing (Dogs, Cats, Birds, Rabbits) and distance-based filtering",
-      "Integrated AI Pet Advisor floating assistant to recommend suitable breeds, care tips, and training guidance",
-      "Digital Pet Passport tracking vaccination statuses, microchip numbers, spay/neuter history, and urgency tags",
-      "Real-time adoption request lifecycle management and in-app direct shelter communication",
+      "Swipe & match card interface",
+      "5-step lifestyle compatibility quiz",
+      "Home dashboard with category & distance filters",
+      "AI pet advisor for breed & care tips",
+      "Digital pet passport (vaccines, microchip)",
+      "Real-time adoption requests & shelter chat",
     ],
     screenshots: [
       {
@@ -121,33 +121,59 @@ export const projects: ProjectItem[] = [
     ],
   },
   {
-    id: "demo-inventory-rest-api",
+    id: "upay-riskintel",
     indexLabel: "03",
-    title: "Structured Resource & REST API Service",
-    category: "Backend & Database Architecture",
-    isDemo: true,
+    title: "Upay RiskIntel — AI Trust & Risk Intelligence",
+    category: "AI Hackathon Project (Fintech Fraud Analytics)",
+    isDemo: false,
     shortDescription:
-      "Clean REST API routing, request validation, and relational database persistence architecture.",
-    thumbnail: "/images/projects/demo-inventory-api.svg",
+      "AI-powered fintech fraud detection and risk telemetry platform built at the AI Hackathon (AI Dev Fest 2026, DIU) for Upay / UCB Fintech by Team Loading_211.",
+    thumbnail: "/images/hackathon-diu/upay-riskintel-banner.png",
     thumbnailAlt:
-      "Demo preview of REST API endpoints and structured JSON response schema",
-    technologies: ["Node.js", "REST API", "PostgreSQL", "Git"],
-    githubUrl: null,
+      "Upay RiskIntel fintech fraud detection platform developed for AI Dev Fest Hackathon",
+    technologies: [
+      "Python",
+      "FastAPI",
+      "Machine Learning",
+      "Fintech API",
+      "Risk Scoring",
+      "React",
+      "Live Telemetry",
+    ],
+    githubUrl: "https://github.com/eliascsebaust19/Upay-RiskIntel",
     liveUrl: null,
     overview:
-      "A demonstration of robust backend design, API contracts, schema validation, and database queries for scalable web applications.",
+      "Upay RiskIntel is an AI-powered trust and fraud intelligence system developed during the national AI Hackathon at AI Dev Fest 2026, organized by DIU CPC under the Department of CSE, Daffodil International University in collaboration with Upay (UCB Fintech Company Limited). Built by Team Loading_211, the system monitors transaction streams in real time to detect anomalous velocity spikes, account takeover (ATO) attacks, and midnight cashout patterns.",
     problemStatement:
-      "Frontend and mobile clients require predictable HTTP contracts, consistent validation errors, and well-indexed relational tables to stay reliable as features grow.",
+      "Digital financial services in Bangladesh face rapid, sophisticated fraud attempts such as SIM-swap account takeovers and automated midnight cashouts that traditional static rule engines fail to catch in real time.",
     features: [
-      "Resource-oriented REST endpoints with standard HTTP status codes",
-      "Schema validation layer and structured JSON error responses",
-      "Paginated query patterns backed by PostgreSQL / MySQL",
-      "Ready to link directly to live GitHub repositories and API docs",
+      "Real-time Telemetry Inspector calculating velocity, failure rates, and agent-distance metrics",
+      "Evaluator Sandbox Toolbar with instant test scenarios: Normal P2P, ATO Attack, and Midnight Cashout",
+      "Upay Trust & Risk AI Shield with adaptive scoring threshold and automated threat alerts",
+      "Integrated mobile simulator showing real-time impact on user wallet balance & transaction validation",
+      "High-throughput FastAPI backend architecture with async live evaluation pipelines",
+      "Recognized with Certificate of Appreciation / Achievement by DIU & Upay leadership",
     ],
     screenshots: [
       {
-        src: "/images/projects/demo-inventory-api.svg",
-        caption: "Demo Endpoint Map & JSON Response Structure",
+        src: "/images/hackathon-diu/upay-riskintel-banner.png",
+        caption: "Upay RiskIntel — Live Application, Hackathon Session & Official Certificate",
+      },
+      {
+        src: "/images/hackathon-diu/upay-riskintel-app.jpeg",
+        caption: "Upay RiskIntel Telemetry Inspector & Evaluator Sandbox on Live Workstation",
+      },
+      {
+        src: "/images/hackathon-diu/hackathon-desk-placard.jpeg",
+        caption: "Official DIU AI Hackathon Desk Placard (Team 067 Loading_211) Signed by Judge",
+      },
+      {
+        src: "/images/hackathon-diu/team-loading211-hacking.jpeg",
+        caption: "Team Loading_211 in Active Development & Algorithm Implementation",
+      },
+      {
+        src: "/certificates/diu-ai-hackathon-certificate.png",
+        caption: "Official Certificate of Appreciation / Achievement from DIU & Upay",
       },
     ],
   },

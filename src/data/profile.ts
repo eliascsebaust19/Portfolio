@@ -66,11 +66,10 @@ export const profile = {
     ] as AvatarOption[],
   },
   about: {
-    headline: "Building practical software & mobile experiences with strong engineering fundamentals.",
+    headline: "Building practical software & mobile apps.",
     paragraphs: [
-      "I'm Elias Ahmad, a Computer Science and Engineering (CSE) student at Bangladesh Army University of Science and Technology (BAUST), aspiring Software Engineer, and technology enthusiast.",
-      "My core focus spans cross-platform mobile application development with Flutter, robust full-stack web and backend engineering, and database-driven software architectures.",
-      "I enjoy breaking down real-world problems, writing clean reactive code, and transforming creative ideas into high-performance, maintainable mobile and web applications.",
+      "CSE student at BAUST and aspiring software engineer. I build practical web and mobile apps with clean, maintainable code.",
+      "Core focus: Flutter mobile apps, full-stack web, and backend engineering.",
     ],
     highlights: [
       { label: "Institution", value: "BAUST" },
@@ -85,7 +84,7 @@ export const profile = {
       title: "Flutter Mobile App Development",
       subtitle: "Cross-Platform Android & iOS",
       description:
-        "Building beautiful, high-performance native-compiled mobile apps from a single codebase with Flutter and Dart, featuring fluid reactive state management and responsive UI.",
+        "Native-compiled Android & iOS apps from a single Flutter codebase.",
       focusAreas: ["Flutter", "Dart", "State Management", "Cross-Platform UI"],
       icon: "smartphone",
     },
@@ -94,7 +93,7 @@ export const profile = {
       title: "Web Development",
       subtitle: "Frontend & Interactive Interfaces",
       description:
-        "Designing clean, responsive, accessible web interfaces with semantic HTML, modern CSS, and interactive JavaScript.",
+        "Clean, responsive interfaces with HTML, CSS, and JavaScript.",
       focusAreas: ["HTML & CSS", "JavaScript", "Responsive UI"],
       icon: "globe",
     },
@@ -103,7 +102,7 @@ export const profile = {
       title: "Backend Development",
       subtitle: "Server Logic & APIs",
       description:
-        "Building structured server-side workflows, authentication flows, and RESTful APIs using PHP and Node.js.",
+        "Server logic, auth flows, and REST APIs with PHP & Node.js.",
       focusAreas: ["PHP", "Node.js", "REST APIs"],
       icon: "server",
     },
@@ -112,7 +111,7 @@ export const profile = {
       title: "Software Development",
       subtitle: "Practical Digital Solutions",
       description:
-        "Applying computer science principles to turn everyday challenges into maintainable, practical applications.",
+        "Turning everyday problems into practical, maintainable apps.",
       focusAreas: ["Architecture", "Version Control", "Clean Code"],
       icon: "code",
     },
@@ -121,7 +120,7 @@ export const profile = {
       title: "Database Management",
       subtitle: "Relational Data Modeling",
       description:
-        "Structuring normalized schemas, writing clear SQL queries, and managing relational data in MySQL and PostgreSQL.",
+        "Normalized schemas and clear SQL in MySQL & PostgreSQL.",
       focusAreas: ["MySQL", "PostgreSQL", "Schema Design"],
       icon: "database",
     },
@@ -130,7 +129,7 @@ export const profile = {
       title: "Problem Solving",
       subtitle: "Algorithms & Debugging",
       description:
-        "Strengthening algorithmic thinking, tracing complex bugs systematically, and continuously improving engineering depth.",
+        "Algorithmic thinking and systematic debugging.",
       focusAreas: ["Data Structures", "Logic", "Debugging"],
       icon: "cpu",
     },

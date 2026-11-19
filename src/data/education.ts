@@ -27,33 +27,51 @@ export const educationMilestones: TimelineMilestone[] = [
     location: "Bangladesh",
     type: "Education",
     description:
-      "Pursuing undergraduate studies in Computer Science and Engineering — building core foundations in programming, data structures, algorithms, databases, and software systems.",
+      "Undergraduate CSE studies — programming, data structures, algorithms, databases, and software systems.",
     tags: ["CSE", "BAUST", "Core CS", "Software Engineering"],
   },
   {
-    id: "web-backend-practice",
-    period: "Continuous Practice",
-    title: "Web & Backend Development Foundations",
-    organization: "Self-Directed Engineering & Coursework",
+    id: "bohubrihi-se",
+    period: "Nov 2026",
+    title: "Pathway to Software Engineering Certification",
+    organization: "BOHUBRIHI (Shikho Technologies)",
+    location: "Verified Credential",
     type: "Development",
     description:
-      "Practicing frontend fundamentals (HTML, CSS, JavaScript), server-side development with PHP and Node.js, relational databases (MySQL, PostgreSQL), and REST API design.",
-    tags: ["HTML/CSS/JS", "PHP & Node.js", "MySQL & PostgreSQL", "REST API"],
+      "Earned official Certificate of Completion in Software Engineering principles, architecture, and industry practices (ID: 6aefe4db60143534454f7a38).",
+    tags: ["Bohubrihi", "Software Engineering", "Verified ID", "System Design"],
+  },
+  {
+    id: "diu-ai-hackathon",
+    period: "Oct 2026",
+    title: "AI Hackathon @ AI Dev Fest 2026",
+    organization:
+      "Daffodil International University (DIU CPC) & Upay (UCB Fintech)",
+    location: "Daffodil Smart City, Dhaka",
+    type: "Development",
+    description:
+      "Competed as Team Loading_211 representing BAUST. Developed and pitched Upay RiskIntel — an AI trust & fraud intelligence platform.",
+    tags: ["AI Dev Fest 2026", "DIU", "Upay Fintech", "Team Loading_211", "Awarded"],
   },
   {
     id: "flutter-devops-exploration",
-    period: "Current Interest",
-    title: "Exploring Flutter Mobile Development & DevOps",
-    organization: "Personal Technical Growth",
+    period: "Continuous Practice",
+    title: "Full-Stack Web & Flutter Mobile Development",
+    organization: "Self-Directed Engineering & Hands-on Builds",
     type: "Learning Focus",
     description:
-      "Expanding technical curiosity toward cross-platform mobile application development with Flutter alongside modern DevOps practices, Git workflows, and deployment pipelines.",
-    tags: ["Flutter Interest", "DevOps Interest", "Git & GitHub"],
+      "Cross-platform mobile apps with Flutter & Dart (AdoptMatch), full-stack web platforms (BAUST Exchange), and FastAPI/Node.js backends.",
+    tags: ["Flutter & Dart", "Next.js & React", "FastAPI & Python", "MySQL & Prisma"],
   },
 ];
 
-/**
- * Configurable Professional Experience List
- * Keep empty until confirmed internships or employment roles are added.
- */
-export const experienceItems: ExperienceItem[] = [];
+export const experienceItems: ExperienceItem[] = [
+  {
+    id: "hackathon-team-lead",
+    period: "Oct 2026",
+    role: "Hackathon Team Lead & Core Developer",
+    company: "AI Dev Fest 2026 Hackathon (DIU & Upay)",
+    description:
+      "Led Team Loading_211 in developing Upay RiskIntel — an AI trust & fraud intelligence prototype with live telemetry inspector, ATO attack simulation, and FastAPI backend.",
+  },
+];

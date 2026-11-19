@@ -1,5 +1,6 @@
 import { Suspense, lazy, useCallback, useState } from "react";
 import { AudioPlayerWidget } from "@/components/AudioVibe/AudioPlayerWidget";
+import { Charlie } from "@/components/Charlie/Charlie";
 import { VibeParticles } from "@/components/AudioVibe/VibeParticles";
 import { Hero } from "@/components/Hero/Hero";
 import { LuxuryIntro } from "@/components/Intro/LuxuryIntro";
@@ -27,6 +28,11 @@ const Projects = lazy(() =>
 const Education = lazy(() =>
   import("@/components/Education/Education").then((m) => ({
     default: m.Education,
+  }))
+);
+const Credentials = lazy(() =>
+  import("@/components/Credentials/Credentials").then((m) => ({
+    default: m.Credentials,
   }))
 );
 const GitHubSection = lazy(() =>
@@ -85,6 +91,7 @@ export function App() {
               <Technologies />
               <Projects />
               <Education />
+              <Credentials />
               <GitHubSection />
               <Contact />
             </Suspense>
@@ -95,6 +102,7 @@ export function App() {
           </Suspense>
 
           <AudioPlayerWidget />
+          <Charlie />
         </div>
       </AudioVibeProvider>
     </SeasonalThemeProvider>

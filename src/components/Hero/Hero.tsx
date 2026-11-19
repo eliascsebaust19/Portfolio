@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ArrowDown, ArrowUpRight, Mail } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Download, Mail } from "lucide-react";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { gsap, useGSAP, scrollToSection } from "@/animations/gsapConfig";
 import { profile } from "@/data/profile";
@@ -96,15 +96,15 @@ export function Hero({ ready }: HeroProps) {
             </span>
           </div>
 
-          <p className="hero-reveal mt-6 font-mono text-sm font-medium uppercase tracking-[0.22em] text-cyan sm:text-base">
+          <p className="hero-reveal mt-5 font-mono text-xs font-medium uppercase tracking-[0.22em] text-cyan sm:text-sm">
             {profile.greeting}
           </p>
 
-          <h1 className="hero-reveal mt-2 font-display text-4xl font-bold tracking-tight text-slate-50 sm:text-6xl xl:text-7xl">
+          <h1 className="hero-reveal mt-2 font-display text-3xl font-bold tracking-tight text-slate-50 sm:text-5xl xl:text-6xl">
             {profile.name}
           </h1>
 
-          <p className="hero-reveal mt-4 text-base font-medium text-slate-300 sm:text-lg">
+          <p className="hero-reveal mt-3 text-sm font-medium text-slate-300 sm:text-base">
             {profile.introSubtitle}
           </p>
 
@@ -124,27 +124,34 @@ export function Hero({ ready }: HeroProps) {
             </div>
           </div>
 
-          <p className="hero-reveal mt-6 max-w-xl text-sm leading-relaxed text-slate-400 sm:text-base">
-            Passionate about building practical applications, strengthening
-            software engineering fundamentals, and exploring Flutter mobile
-            development alongside modern DevOps workflows.
+          <p className="hero-reveal mt-5 max-w-md text-sm leading-relaxed text-slate-400">
+            CSE student at BAUST building practical web &amp; mobile apps with clean code.
           </p>
 
           {/* Primary Actions */}
-          <div className="hero-reveal mt-8 flex flex-wrap items-center gap-4">
+          <div className="hero-reveal mt-7 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
               onClick={(e) => {
                 e.preventDefault();
                 scrollToSection("projects");
               }}
-              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan to-teal px-6 py-3.5 font-display text-sm font-semibold text-void shadow-[0_10px_30px_rgba(0,229,255,0.2)] transition-all duration-200 hover:brightness-110"
+              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan to-teal px-5 py-3 font-display text-[13px] font-semibold text-void shadow-[0_10px_30px_rgba(0,229,255,0.2)] transition-all duration-200 hover:brightness-110"
             >
               <span>Explore Projects</span>
               <ArrowUpRight
-                size={18}
+                size={15}
                 className="transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
+            </a>
+
+            <a
+              href="/cv/Elias-Ahmad-CV.pdf"
+              download="Elias-Ahmad-CV.pdf"
+              className="inline-flex items-center gap-2 rounded-xl border border-teal/40 bg-teal/10 px-5 py-3 font-display text-[13px] font-semibold text-teal-300 transition-colors duration-200 hover:border-teal-400 hover:bg-teal/20"
+            >
+              <Download size={15} />
+              <span>Download CV</span>
             </a>
 
             <a
@@ -153,15 +160,15 @@ export function Hero({ ready }: HeroProps) {
                 e.preventDefault();
                 scrollToSection("contact");
               }}
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-surface/80 px-6 py-3.5 font-display text-sm font-semibold text-slate-100 transition-colors duration-200 hover:border-cyan/50 hover:text-cyan"
+              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-surface/80 px-5 py-3 font-display text-[13px] font-semibold text-slate-100 transition-colors duration-200 hover:border-cyan/50 hover:text-cyan"
             >
               <span>Get in Touch</span>
             </a>
           </div>
 
           {/* Social Links */}
-          <div className="hero-reveal mt-8 flex items-center gap-3">
-            <span className="mr-1 font-mono text-xs text-slate-500">
+          <div className="hero-reveal mt-7 flex items-center gap-2.5">
+            <span className="mr-1 font-mono text-[11px] text-slate-500">
               CONNECT:
             </span>
             <a
@@ -169,25 +176,25 @@ export function Hero({ ready }: HeroProps) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Elias Ahmad on GitHub"
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-800 bg-surface/70 text-slate-300 transition-all hover:border-cyan/50 hover:text-cyan"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-surface/70 text-slate-300 transition-all hover:border-cyan/50 hover:text-cyan"
             >
-              <FaGithub size={18} />
+              <FaGithub size={15} />
             </a>
             <a
               href={socialLinks.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Elias Ahmad on LinkedIn"
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-800 bg-surface/70 text-slate-300 transition-all hover:border-cyan/50 hover:text-cyan"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-surface/70 text-slate-300 transition-all hover:border-cyan/50 hover:text-cyan"
             >
-              <FaLinkedinIn size={17} />
+              <FaLinkedinIn size={14} />
             </a>
             <a
               href={`mailto:${socialLinks.email}`}
               aria-label="Email Elias Ahmad"
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-slate-800 bg-surface/70 text-slate-300 transition-all hover:border-cyan/50 hover:text-cyan"
+              className="flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-surface/70 text-slate-300 transition-all hover:border-cyan/50 hover:text-cyan"
             >
-              <Mail size={17} />
+              <Mail size={14} />
             </a>
           </div>
         </div>
