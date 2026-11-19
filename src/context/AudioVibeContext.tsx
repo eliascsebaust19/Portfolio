@@ -10,7 +10,12 @@ import { AudioVibeContext, type VibeMetrics } from "./useAudioVibe";
 
 export type { VibeMetrics };
 
-const CUSTOM_AUDIO_PATH = "/audio/vibe-track.mp3";
+const CUSTOM_AUDIO_CANDIDATES = [
+  "/audio/music.m4a",
+  "/music.m4a",
+  "/audio/vibe-track.mp3",
+  "/audio/music.mp3",
+];
 
 // Chill cyber-synthwave chord progression in C minor / Eb major (112 BPM)
 const BASS_PATTERN = [65.41, 0, 65.41, 77.78, 58.27, 0, 58.27, 73.42, 51.91, 0, 51.91, 65.41, 49.0, 0, 58.27, 61.74];
@@ -53,7 +58,7 @@ export function AudioVibeProvider({ children }: { children: ReactNode }) {
   const masterGainRef = useRef<GainNode | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const audioElRef = useRef<HTMLAudioElement | null>(null);
-  const usingCustomTrackRef = useRef<boolean | null>(null);
+  const customTrackUrlRef = useRef<string | null | undefined>(undefined);
   const synthTimerRef = useRef<number | null>(null);
   const rafRef = useRef<number | null>(null);
   const stepIndexRef = useRef(0);
@@ -306,21 +311,38 @@ export function AudioVibeProvider({ children }: { children: ReactNode }) {
         await ctx.resume();
       }
 
-      // Check once if a custom MP3 exists at /audio/vibe-track.mp3
-      if (usingCustomTrackRef.current === null) {
-        try {
-          const head = await fetch(CUSTOM_AUDIO_PATH, { method: "HEAD" });
-          const ct = (head.headers.get("content-type") || "").toLowerCase();
-          usingCustomTrackRef.current =
-            head.ok && ct.includes("audio") && !ct.includes("text/html");
-        } catch {
-          usingCustomTrackRef.current = false;
+      // Check once if music.m4a (or custom audio track) exists in public/
+      if (customTrackUrlRef.current === undefined) {
+        let detectedUrl: string | null = null;
+        for (const candidate of CUSTOM_AUDIO_CANDIDATES) {
+          try {
+            const head = await fetch(candidate, {
+              method: "HEAD",
+              cache: "no-store",
+            });
+            const ct = (head.headers.get("content-type") || "").toLowerCase();
+            if (
+              head.ok &&
+              !ct.includes("text/html") &&
+              (ct.includes("audio") ||
+                ct.includes("mp4") ||
+                ct.includes("aac") ||
+                ct.includes("mpeg") ||
+                ct.includes("octet-stream"))
+            ) {
+              detectedUrl = candidate;
+              break;
+            }
+          } catch {
+            // Try next candidate
+          }
         }
+        customTrackUrlRef.current = detectedUrl;
       }
 
-      if (usingCustomTrackRef.current) {
+      if (customTrackUrlRef.current) {
         if (!audioElRef.current) {
-          const el = new Audio(CUSTOM_AUDIO_PATH);
+          const el = new Audio(customTrackUrlRef.current);
           el.loop = true;
           el.crossOrigin = "anonymous";
           const source = ctx.createMediaElementSource(el);
@@ -328,7 +350,8 @@ export function AudioVibeProvider({ children }: { children: ReactNode }) {
           audioElRef.current = el;
         }
         await audioElRef.current.play();
-        setTrackLabel("Custom Portfolio Track");
+        const fileName = customTrackUrlRef.current.split("/").pop() || "music.m4a";
+        setTrackLabel(`${fileName} · Audio Reactive`);
       } else {
         // Start lookahead 112 BPM synth scheduler (16th note = ~133.9ms)
         const stepDuration = 60 / 112 / 4;
