@@ -72,7 +72,7 @@ export function Navbar() {
           <img
             src="/images/brand/ea-logo-512.png"
             alt="EA logo"
-            className="h-9 w-9 rounded-lg border border-cyan/30 object-cover transition-transform duration-300 group-hover:scale-105 group-hover:border-cyan/60"
+            className="h-9 w-9 object-contain transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_0_10px_rgba(6,182,212,0.35)]"
           />
           <span className="hidden font-display text-[13px] font-semibold tracking-[0.16em] text-slate-100 sm:inline-block">
             {profile.name}
