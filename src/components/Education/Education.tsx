@@ -64,22 +64,20 @@ export function Education() {
     <section
       id="journey"
       ref={sectionRef}
-      className="relative bg-obsidian py-24 sm:py-28"
+      className="relative bg-obsidian py-16 sm:py-20"
     >
       <div className="section-divider absolute inset-x-0 top-0" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="mb-14 max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-cyan">
+        <div className="mb-10 max-w-2xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan">
             05 // Education &amp; Journey
           </p>
-          <h2 className="mt-3 font-display text-3xl font-bold text-slate-50 sm:text-4xl">
+          <h2 className="mt-2 font-display text-2xl font-bold text-slate-50 sm:text-3xl">
             Academic Path &amp; Growth
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
-            Academic engineering foundations at BAUST combined with self-driven
-            practice in software development, backend architecture, and mobile
-            &amp; DevOps exploration.
+          <p className="mt-2 text-sm leading-relaxed text-slate-400">
+            CSE foundations at BAUST + self-driven practice in web, backend, and mobile.
           </p>
         </div>
 
@@ -123,15 +121,15 @@ export function Education() {
                     </span>
                   </div>
 
-                  <h3 className="mt-4 font-display text-xl font-bold text-slate-50 sm:text-2xl">
+                  <h3 className="mt-3.5 font-display text-lg font-bold text-slate-50 sm:text-xl">
                     {item.title}
                   </h3>
-                  <p className="mt-1 text-sm font-medium text-teal-400">
+                  <p className="mt-1 text-[13px] font-medium text-teal-400">
                     {item.organization}
                     {item.location ? ` · ${item.location}` : ""}
                   </p>
 
-                  <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
+                  <p className="mt-2.5 text-[13px] leading-relaxed text-slate-300 sm:text-sm">
                     {item.description}
                   </p>
 
@@ -187,10 +185,7 @@ export function Education() {
             </div>
           ) : (
             <p className="mt-4 text-sm leading-relaxed text-slate-400">
-              Currently focused on undergraduate CSE studies at BAUST and
-              independent software development. Open to software engineering
-              internships, collaborative student builds, and open-source
-              learning opportunities.
+              Undergraduate CSE studies at BAUST + independent builds. Open to internships and collaborations.
             </p>
           )}
         </div>

@@ -129,7 +129,7 @@ export function Technologies() {
     <section
       id="technologies"
       ref={sectionRef}
-      className="relative bg-obsidian py-24 sm:py-28"
+      className="relative bg-obsidian py-16 sm:py-20"
     >
       <div className="section-divider absolute inset-x-0 top-0" />
 
@@ -140,13 +140,12 @@ export function Technologies() {
             <p className="font-mono text-xs uppercase tracking-[0.25em] text-cyan">
               03 // Tech Stack
             </p>
-            <h2 className="mt-3 font-display text-3xl font-bold text-slate-50 sm:text-4xl">
+            <h2 className="mt-2 font-display text-2xl font-bold text-slate-50 sm:text-3xl">
               Technologies &amp; Tools
             </h2>
           </div>
-          <p className="max-w-lg text-sm text-slate-400">
-            Organized honestly by current stage — distinguishing technologies I
-            am actively <span className="text-violet-300">learning</span>,{" "}
+          <p className="max-w-lg text-xs text-slate-400">
+            Organized by stage — <span className="text-violet-300">learning</span>,{" "}
             <span className="text-teal-400">practicing</span>, and{" "}
             <span className="text-cyan">familiar with</span>.
           </p>

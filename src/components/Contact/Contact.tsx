@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   AlertCircle,
   CheckCircle2,
+  Download,
   Mail,
   MapPin,
   Send,
@@ -153,22 +154,20 @@ export function Contact() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative bg-obsidian py-24 sm:py-28"
+      className="relative bg-obsidian py-16 sm:py-20"
     >
       <div className="section-divider absolute inset-x-0 top-0" />
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8">
-        <div className="contact-reveal mb-12 max-w-2xl">
-          <p className="font-mono text-xs uppercase tracking-[0.25em] text-cyan">
+        <div className="contact-reveal mb-8 max-w-2xl">
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-cyan">
             07 // Contact
           </p>
-          <h2 className="mt-3 font-display text-3xl font-bold text-slate-50 sm:text-4xl">
+          <h2 className="mt-2 font-display text-2xl font-bold text-slate-50 sm:text-3xl">
             Let&apos;s Connect
           </h2>
-          <p className="mt-3 text-sm leading-relaxed text-slate-400 sm:text-base">
-            Have a project idea, collaboration inquiry, or question? Send a
-            message directly using the form or connect through email, GitHub,
-            or LinkedIn.
+          <p className="mt-2 text-sm leading-relaxed text-slate-400">
+            Project idea or question? Send a message or reach me directly.
           </p>
         </div>
 
@@ -243,6 +242,24 @@ export function Contact() {
                 </p>
               </div>
             </div>
+
+            <a
+              href="/cv/Elias-Ahmad-CV.pdf"
+              download="Elias-Ahmad-CV.pdf"
+              className="group flex items-start gap-4 rounded-2xl border border-teal/30 bg-teal/5 p-5 transition-colors hover:border-teal/50"
+            >
+              <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-teal/10 text-teal-400">
+                <Download size={20} />
+              </div>
+              <div className="min-w-0">
+                <p className="font-mono text-xs uppercase tracking-wider text-slate-400">
+                  Resume
+                </p>
+                <p className="mt-1 font-display text-base font-semibold text-slate-100 group-hover:text-teal-300">
+                  Download CV (PDF)
+                </p>
+              </div>
+            </a>
           </div>
 
           {/* Contact Form */}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Download, Menu, X } from "lucide-react";
 import { profile } from "@/data/profile";
 import { useActiveSection } from "@/hooks/useActiveSection";
 import { scrollToSection } from "@/animations/gsapConfig";
@@ -59,7 +59,7 @@ export function Navbar() {
 
       <nav
         aria-label="Primary navigation"
-        className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-5 sm:px-8"
+        className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8"
       >
         {/* Logo */}
         <a
@@ -68,10 +68,12 @@ export function Navbar() {
           className="group flex items-center gap-3 focus-visible:outline-none"
           aria-label="Elias Ahmad — Back to top"
         >
-          <span className="vibe-monogram flex h-10 w-10 items-center justify-center rounded-xl border border-cyan/30 bg-surface/80 font-display text-sm font-bold tracking-wider text-cyan transition-transform duration-300 group-hover:scale-105 group-hover:border-cyan/60">
-            {profile.monogram}
-          </span>
-          <span className="hidden font-display text-sm font-semibold tracking-[0.16em] text-slate-100 sm:inline-block">
+          <img
+            src="/images/brand/ea-logo-512.png"
+            alt="EA logo"
+            className="h-9 w-9 rounded-lg border border-cyan/30 object-cover transition-transform duration-300 group-hover:scale-105 group-hover:border-cyan/60"
+          />
+          <span className="hidden font-display text-[13px] font-semibold tracking-[0.16em] text-slate-100 sm:inline-block">
             {profile.name}
           </span>
         </a>
@@ -86,7 +88,7 @@ export function Navbar() {
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(e, item.id)}
                   aria-current={isActive ? "page" : undefined}
-                  className={`group relative inline-flex items-center px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                  className={`group relative inline-flex items-center px-3.5 py-2 text-[13px] font-medium transition-colors duration-200 ${
                     isActive
                       ? "text-cyan"
                       : "text-slate-300 hover:text-slate-100"
@@ -111,9 +113,18 @@ export function Navbar() {
           <SeasonalThemeSelector compact={false} />
 
           <a
+            href="/cv/Elias-Ahmad-CV.pdf"
+            download="Elias-Ahmad-CV.pdf"
+            className="hidden items-center gap-1.5 rounded-lg border border-teal/35 bg-teal/10 px-3.5 py-2 font-mono text-[11px] font-medium text-teal-300 transition-all duration-200 hover:border-teal-400 hover:bg-teal/20 md:inline-flex"
+          >
+            <Download size={13} />
+            <span>CV</span>
+          </a>
+
+          <a
             href="#contact"
             onClick={(e) => handleNavClick(e, "contact")}
-            className="hidden rounded-lg border border-cyan/35 bg-cyan/10 px-4 py-2 font-mono text-xs font-medium text-cyan transition-all duration-200 hover:border-cyan hover:bg-cyan/20 sm:inline-flex"
+            className="hidden rounded-lg border border-cyan/35 bg-cyan/10 px-3.5 py-2 font-mono text-[11px] font-medium text-cyan transition-all duration-200 hover:border-cyan hover:bg-cyan/20 sm:inline-flex"
           >
             Let&apos;s Connect
           </a>
@@ -124,9 +135,9 @@ export function Navbar() {
             aria-expanded={mobileOpen}
             aria-controls="mobile-navigation"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-800 bg-surface/80 text-slate-200 transition-colors hover:border-cyan/40 hover:text-cyan lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-slate-800 bg-surface/80 text-slate-200 transition-colors hover:border-cyan/40 hover:text-cyan lg:hidden"
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={17} /> : <Menu size={17} />}
           </button>
         </div>
       </nav>
@@ -146,7 +157,7 @@ export function Navbar() {
                 <a
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(e, item.id)}
-                  className={`flex items-center justify-between rounded-lg px-4 py-3 text-base font-medium transition-colors ${
+                  className={`flex items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                     isActive
                       ? "bg-cyan/10 text-cyan"
                       : "text-slate-300 hover:bg-surface hover:text-slate-100"
@@ -160,6 +171,16 @@ export function Navbar() {
               </li>
             );
           })}
+          <li>
+            <a
+              href="/cv/Elias-Ahmad-CV.pdf"
+              download="Elias-Ahmad-CV.pdf"
+              className="flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-teal-300 transition-colors hover:bg-surface"
+            >
+              <Download size={15} />
+              <span>Download CV</span>
+            </a>
+          </li>
         </ul>
       </div>
     </header>

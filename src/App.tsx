@@ -1,5 +1,6 @@
 import { Suspense, lazy, useCallback, useState } from "react";
 import { AudioPlayerWidget } from "@/components/AudioVibe/AudioPlayerWidget";
+import { Charlie } from "@/components/Charlie/Charlie";
 import { VibeParticles } from "@/components/AudioVibe/VibeParticles";
 import { Hero } from "@/components/Hero/Hero";
 import { LuxuryIntro } from "@/components/Intro/LuxuryIntro";
@@ -95,6 +96,7 @@ export function App() {
           </Suspense>
 
           <AudioPlayerWidget />
+          <Charlie />
         </div>
       </AudioVibeProvider>
     </SeasonalThemeProvider>
