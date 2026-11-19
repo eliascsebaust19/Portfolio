@@ -14,7 +14,7 @@ export function Footer() {
           <img
             src="/images/brand/ea-logo-512.png"
             alt="EA logo"
-            className="h-9 w-9 rounded-lg border border-cyan/25 object-cover"
+            className="h-9 w-9 object-contain drop-shadow-[0_0_8px_rgba(6,182,212,0.3)]"
           />
           <div>
             <p className="font-display text-sm font-semibold tracking-wider text-slate-100">
