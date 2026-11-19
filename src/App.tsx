@@ -3,7 +3,7 @@ import { AudioPlayerWidget } from "@/components/AudioVibe/AudioPlayerWidget";
 import { VibeParticles } from "@/components/AudioVibe/VibeParticles";
 import { CustomCursor } from "@/components/CustomCursor/CustomCursor";
 import { Hero } from "@/components/Hero/Hero";
-import { Loader } from "@/components/Loader/Loader";
+import { LuxuryIntro } from "@/components/Intro/LuxuryIntro";
 import { Navbar } from "@/components/Navbar/Navbar";
 import { SeasonalParticlesOverlay } from "@/components/SeasonalTheme/SeasonalParticlesOverlay";
 import { AudioVibeProvider } from "@/context/AudioVibeContext";
@@ -58,7 +58,7 @@ export function App() {
     <SeasonalThemeProvider>
       <AudioVibeProvider>
         <div className="relative min-h-screen bg-void text-slate-100">
-          {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
+          {!loaderDone && <LuxuryIntro onComplete={handleLoaderComplete} />}
           <CustomCursor />
           <SeasonalParticlesOverlay />
           <VibeParticles />

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-24 -24 372 288" width="744" height="576" role="img" aria-label="EA monogram">
+  <title>EA</title>
+  <defs>
+    <linearGradient id="chrome" gradientUnits="userSpaceOnUse" x1="120" y1="-80" x2="210" y2="320">
+      <stop offset="0" stop-color="#f7f9fc"/>
+      <stop offset="0.14" stop-color="#aeb4bd"/>
+      <stop offset="0.3" stop-color="#4a4e55"/>
+      <stop offset="0.46" stop-color="#1b1d21"/>
+      <stop offset="0.5" stop-color="#e6e9ee"/>
+      <stop offset="0.56" stop-color="#8b9199"/>
+      <stop offset="0.72" stop-color="#3a3d43"/>
+      <stop offset="0.88" stop-color="#c9cdd3"/>
+      <stop offset="1" stop-color="#7c8189"/>
+    </linearGradient>
+  </defs>
+  <path fill="url(#chrome)" stroke="#eef2f9" stroke-width="1.4" stroke-linejoin="round" fill-rule="evenodd"
+        d="M0 0H118V36H38V102H98V138H38V204H118V240H0Z M156 240L222 0H258L324 240H284L269.15 186H210.85L196 240Z M240 80L259.25 150H220.75Z"/>
+</svg>
