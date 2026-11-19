@@ -11,7 +11,6 @@ import { Maximize2, Minimize2 } from "lucide-react";
 import { profile } from "@/data/profile";
 import { useAudioVibe } from "@/context/useAudioVibe";
 import { useDeviceCapabilities } from "@/hooks/useReducedMotion";
-import { AvatarLoadingScreen } from "./AvatarLoadingScreen";
 
 const AvatarCanvas = lazy(() => import("./AvatarCanvas"));
 
@@ -189,10 +188,6 @@ export function Character3D() {
         <ModelErrorBoundary fallback={staticFallback}>
           <Suspense fallback={staticFallback}>
             <div className="relative h-full w-full">
-              <AvatarLoadingScreen
-                modelStatus={modelStatus}
-                modelTitle={currentAvatar.title}
-              />
               <AvatarCanvas
                 glbPath={currentAvatar.glbPath}
                 hasGlbModel={modelStatus === "ready"}
