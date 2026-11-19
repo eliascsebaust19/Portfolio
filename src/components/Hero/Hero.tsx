@@ -194,7 +194,11 @@ export function Hero({ ready }: HeroProps) {
 
         {/* Right 3D Avatar Column */}
         <div className="hero-stage lg:col-span-5">
-          <Character3D />
+          {ready ? (
+            <Character3D />
+          ) : (
+            <div className="h-[400px] sm:h-[480px] lg:h-[600px]" />
+          )}
         </div>
       </div>
 

@@ -3,7 +3,7 @@ import { AudioPlayerWidget } from "@/components/AudioVibe/AudioPlayerWidget";
 import { VibeParticles } from "@/components/AudioVibe/VibeParticles";
 import { CustomCursor } from "@/components/CustomCursor/CustomCursor";
 import { Hero } from "@/components/Hero/Hero";
-import { Loader } from "@/components/Loader/Loader";
+import { LuxuryIntro } from "@/components/Intro/LuxuryIntro";
 import { Navbar } from "@/components/Navbar/Navbar";
 import { SeasonalParticlesOverlay } from "@/components/SeasonalTheme/SeasonalParticlesOverlay";
 import { AudioVibeProvider } from "@/context/AudioVibeContext";
@@ -52,40 +52,54 @@ function SectionFallback() {
 
 export function App() {
   const [loaderDone, setLoaderDone] = useState(false);
+  const [revealing, setRevealing] = useState(false);
+  const portfolioVisible = revealing || loaderDone;
+  const handleLoaderReveal = useCallback(() => setRevealing(true), []);
   const handleLoaderComplete = useCallback(() => setLoaderDone(true), []);
+  const setPortfolioRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) node.inert = !portfolioVisible;
+    },
+    [portfolioVisible]
+  );
 
   return (
     <SeasonalThemeProvider>
       <AudioVibeProvider>
-        <div className="relative min-h-screen bg-void text-slate-100">
-          {!loaderDone && <Loader onComplete={handleLoaderComplete} />}
-          <CustomCursor />
+        {!loaderDone && (
+          <LuxuryIntro onReveal={handleLoaderReveal} onComplete={handleLoaderComplete} />
+        )}
+        <div
+          ref={setPortfolioRef}
+          className={`relative min-h-screen bg-void text-slate-100 ${portfolioVisible ? "" : "invisible"}`}
+        >
+          {portfolioVisible && <CustomCursor />}
           <SeasonalParticlesOverlay />
           <VibeParticles />
           <Navbar />
 
-        <main id="main-content">
-          <Hero ready={loaderDone} />
+          <main id="main-content">
+            <Hero ready={portfolioVisible} />
 
-          <Suspense fallback={<SectionFallback />}>
-            <About />
-            <WhatIDo />
-            <Technologies />
-            <Projects />
-            <Education />
-            <GitHubSection />
-            <Contact />
+            <Suspense fallback={<SectionFallback />}>
+              <About />
+              <WhatIDo />
+              <Technologies />
+              <Projects />
+              <Education />
+              <GitHubSection />
+              <Contact />
+            </Suspense>
+          </main>
+
+          <Suspense fallback={null}>
+            <Footer />
           </Suspense>
-        </main>
 
-        <Suspense fallback={null}>
-          <Footer />
-        </Suspense>
-
-        <AudioPlayerWidget />
-      </div>
-    </AudioVibeProvider>
-  </SeasonalThemeProvider>
+          <AudioPlayerWidget />
+        </div>
+      </AudioVibeProvider>
+    </SeasonalThemeProvider>
   );
 }
 
