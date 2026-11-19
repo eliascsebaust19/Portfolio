@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://eliasahmad.dev/sitemap.xml
+Sitemap: https://eliasahmad.vercel.app/sitemap.xml
