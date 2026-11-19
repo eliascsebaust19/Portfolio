@@ -49,12 +49,13 @@ export function AvatarModel({
 }: AvatarModelProps) {
   const groupRef = useRef<THREE.Group>(null);
   const entranceProgress = useRef(reducedMotion ? 1 : 0);
+  const smoothPointer = useRef({ x: 0, y: 0 });
 
-  // Uses Drei's useGLTF with Draco CDN decoder enabled by default
-  const gltf = useGLTF(glbPath, true);
+  // Load standard GLB directly without external Draco CDN dependency
+  const gltf = useGLTF(glbPath, false);
   const { actions, names } = useAnimations(gltf.animations, groupRef);
 
-  // Normalize scale and center the model cleanly in view
+  // Normalize scale and center the model cleanly above the switcher pill
   const { normalizedScale, offset } = useMemo(() => {
     const box = new THREE.Box3().setFromObject(gltf.scene);
     const size = new THREE.Vector3();
@@ -63,14 +64,14 @@ export function AvatarModel({
     box.getCenter(center);
 
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
-    const targetHeight = 2.7;
+    const targetHeight = 2.42;
     const scale = targetHeight / maxDim;
 
     return {
       normalizedScale: scale,
       offset: new THREE.Vector3(
         -center.x * scale,
-        -box.min.y * scale - 1.35,
+        -box.min.y * scale - 1.08,
         -center.z * scale
       ),
     };
@@ -90,6 +91,8 @@ export function AvatarModel({
       if ((child as THREE.Mesh).isMesh) {
         child.castShadow = true;
         child.receiveShadow = true;
+        // Prevent animated skinned meshes from clipping out of bind-pose bounds
+        child.frustumCulled = false;
       }
     });
   }, [gltf.scene]);
@@ -122,18 +125,29 @@ export function AvatarModel({
 
     if (reducedMotion) return;
 
-    const px = pointerRef.current.x;
-    const py = pointerRef.current.y;
+    smoothPointer.current.x = THREE.MathUtils.lerp(
+      smoothPointer.current.x,
+      pointerRef.current.x,
+      0.08
+    );
+    smoothPointer.current.y = THREE.MathUtils.lerp(
+      smoothPointer.current.y,
+      pointerRef.current.y,
+      0.08
+    );
+
+    const px = smoothPointer.current.x;
+    const py = smoothPointer.current.y;
     const elapsed = state.clock.getElapsedTime();
 
     // Subtle idle breathing / hover float
-    const idleFloat = Math.sin(elapsed * 1.4) * 0.025;
+    const idleFloat = Math.sin(elapsed * 1.4) * 0.02;
     groupRef.current.position.y = offset.y + idleFloat;
 
     // Gentle body yaw tracking pointer
     groupRef.current.rotation.y = THREE.MathUtils.lerp(
       groupRef.current.rotation.y,
-      px * 0.22,
+      px * 0.24,
       0.06
     );
     groupRef.current.rotation.x = THREE.MathUtils.lerp(
@@ -142,24 +156,24 @@ export function AvatarModel({
       0.06
     );
 
-    // Head & neck bone tracking when model rig provides them
+    // Smoothly blend pointer look toward cursor without accumulating rotation
     if (headBone) {
       headBone.rotation.y = THREE.MathUtils.lerp(
         headBone.rotation.y,
         px * 0.35,
-        0.09
+        0.12
       );
       headBone.rotation.x = THREE.MathUtils.lerp(
         headBone.rotation.x,
-        THREE.MathUtils.clamp(-py * 0.22, -0.28, 0.28),
-        0.09
+        THREE.MathUtils.clamp(-py * 0.22, -0.26, 0.26),
+        0.12
       );
     }
     if (neckBone) {
       neckBone.rotation.y = THREE.MathUtils.lerp(
         neckBone.rotation.y,
-        px * 0.14,
-        0.07
+        px * 0.15,
+        0.09
       );
     }
   });
